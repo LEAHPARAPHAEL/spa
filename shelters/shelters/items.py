@@ -6,7 +6,7 @@
 import scrapy
 
 
-class SheltersCrawlersItem(scrapy.Item):
+class SheltersItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass

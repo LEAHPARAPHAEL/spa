@@ -1,4 +1,4 @@
-# Scrapy settings for shelters_crawlers project
+# Scrapy settings for shelters project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,16 +7,16 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "shelters_crawlers"
+BOT_NAME = "shelters"
 
-SPIDER_MODULES = ["shelters_crawlers.spiders"]
-NEWSPIDER_MODULE = "shelters_crawlers.spiders"
+SPIDER_MODULES = ["shelters.spiders"]
+NEWSPIDER_MODULE = "shelters.spiders"
 
 ADDONS = {}
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "shelters_crawlers (+http://www.yourdomain.com)"
+USER_AGENT = "shelters (https://www.masteriasd.eu/fr/)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -41,13 +41,13 @@ DOWNLOAD_DELAY = 1
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    "shelters_crawlers.middlewares.SheltersCrawlersSpiderMiddleware": 543,
+#    "shelters.middlewares.SheltersSpiderMiddleware": 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    "shelters_crawlers.middlewares.SheltersCrawlersDownloaderMiddleware": 543,
+    "shelters.middlewares.SheltersSpiderMiddleware": 543,
 }
 
 # Enable or disable extensions
@@ -58,9 +58,10 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "shelters_crawlers.pipelines.SheltersCrawlersPipeline": 300,
-#}
+ITEM_PIPELINES = {
+    'shelters.pipelines.SQLitePipeline': 300,
+    'shelters.pipelines.JsonWriterPipeline': 400,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
