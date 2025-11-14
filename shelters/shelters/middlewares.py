@@ -62,6 +62,8 @@ class SheltersSpiderMiddleware:
             raise IgnoreRequest()
 
         '''
+        filepath = self._url_to_path(request.url)
+
         # Serve from cache if it exists
         if os.path.isfile(filepath):
             spider.logger.debug(f"Serving from cache: {request.url}")

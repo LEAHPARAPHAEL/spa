@@ -1,127 +1,635 @@
 {
     "spa": {
-        "beagle": "Beagle",
-        "akita inu": "Akita",
-        "bouledogue francais": "French Bulldog",
-        "husky siberien": "Siberian Husky",
-        "labrador (retriever)": "Labrador Retriever",
-        "berger d'anatolie": "Anatolian Shepherd Dog",
-        "anglo": "AMBIGUOUS",
-        "griffon nivernais": "NOT FOUND",
-        "epagneul breton": "Brittany",
-        "berger": "AMBIGUOUS",
-        "boxer": "Boxer",
-        "drahthaar": "German Wirehaired Pointer",
-        "griffon a poil dur korthals": "Wirehaired Pointing Griffon",
-        "chien loup tcheque": "NOT FOUND",
-        "berger belge malinois": "Belgian Malinois",
-        "berger allemand": "German Shepherd Dog",
-        "berger de beauce": "NOT FOUND",
-        "braque": "Braque du Bourbonnais",
-        "dogue argentin": "Dogo Argentino",
-        "chihuahua": "Chihuahua",
-        "cane corso": "Cane Corso",
-        "border collie": "Border Collie",
-        "golden retriever": "Golden Retriever",
-        "spitz": "German Spitz",
-        "teckel": "Dachshund",
-        "griffon": "NOT FOUND",
-        "ratier": "AMBIGUOUS",
-        "rottweiler": "Rottweiler",
-        "pointer": "Pointer",
-        "setter anglais": "English Setter",
-        "berger des pyrenees": "Pyrenean Shepherd",
-        "american staffordshire": "American Staffordshire Terrier",
-        "saint bernard": "Saint Bernard",
-        "dobermann": "Doberman Pinscher",
-        "chien courant": "AMBIGUOUS",
-        "basset": "Basset Hound",
-        "epagneul": "AMBIGUOUS",
-        "bouvier bernois": "Bernese Mountain Dog",
-        "dogo canario": "NOT FOUND",
-        "berger belge groenendael": "Belgian Sheepdog",
-        "bull dog américain": "American Bulldog",
-        "jack russel terrier": "Jack Russell Terrier",
-        "berger belge tervueren": "Belgian Tervuren",
-        "shar pei": "Chinese Shar-Pei",
-        "bouvier australien": "Australian Cattle Dog",
-        "levrier": "Greyhound",
-        "chow chow": "Chow Chow",
-        "berger australien d'amérique": "AMBIGUOUS",
-        "dalmatien": "Dalmatian",
-        "bull terrier": "Bull Terrier",
-        "terrier": "AMBIGUOUS",
-        "bouledogue américain": "American Bulldog",
-        "berger hollandais": "Dutch Shepherd",
-        "bouledogue anglais": "Bulldog",
-        "porcelaine": "NOT FOUND",
-        "dogue allemand": "Great Dane",
-        "pinscher moyen": "Standard Schnauzer",
-        "epagneul francais": "French Spaniel",
-        "fox terrier poil dur": "Fox Terrier",
-        "pinscher nain": "Miniature Pinscher",
-        "bichon": "Bichon Frise",
-        "rhodesian ridgeback": "Rhodesian Ridgeback",
-        "montagne des pyrénées": "NOT FOUND",
-        "yorkshire terrier": "Yorkshire Terrier",
-        "coton de tulear": "Coton de Tulear",
-        "pekin ois": "Pekingese",
-        "dogue de bordeaux": "Dogue de Bordeaux",
-        "berger du caucase": "Caucasian Shepherd Dog",
-        "dogue": "AMBIGUOUS",
-        "jadg terrier": "AMBIGUOUS",
-        "springer": "English Springer Spaniel",
-        "fox terrier poil lisse": "Fox Terrier (Smooth)",
-        "griffon fauve de bretagne": "NOT FOUND",
-        "staffordshire bull terrier": "Staffordshire Bull Terrier",
-        "grand bleu de gascogne": "NOT FOUND",
-        "grand gascon saintongeois": "NOT FOUND",
-        "shih tzu": "Shih Tzu",
-        "griffon bleu de gascogne": "NOT FOUND",
-        "berger blanc suisse": "NOT FOUND",
-        "chien corse": "NOT FOUND",
-        "podenco": "Podenco",
-        "berger d'asie centrale": "Central Asian Shepherd Dog",
-        "epagneul nain papillon": "Papillon",
-        "ariegeois": "NOT FOUND",
-        "malamute de l'alaska": "Alaskan Malamute",
-        "x terrier": "AMBIGUOUS",
-        "basset hound": "Basset Hound",
-        "basset fauve de bretagne": "Basset Fauve de Bretagne",
-        "grand griffon vendeen": "NOT FOUND",
-        "american bully": "NOT FOUND",
-        "bruno du jura": "NOT FOUND",
-        "caniche moyen": "Poodle",
-        "bichon a poil frisé": "Bichon Frise",
-        "setter gordon": "Gordon Setter",
-        "samoyede": "Samoyed",
-        "schnauzer moyen": "Standard Schnauzer",
-        "croisé / autre": "NOT FOUND",
-        "berger australien kelpie": "Australian Kelpie",
-        "staffie": "Staffordshire Bull Terrier",
-        "shiba inu": "Shiba Inu",
-        "terre neuve": "Newfoundland",
-        "berger yougoslave": "NOT FOUND",
-        "matin de naples": "Neapolitan Mastiff",
-        "schnauzer nain": "Miniature Schnauzer",
-        "epagneul japonais": "Japanese Chin",
-        "grand bouvier suisse": "Greater Swiss Mountain Dog",
-        "chien loup de saarloos": "NOT FOUND",
-        "berger de maremme et abuzzes": "Maremma Sheepdog",
-        "berger catalan": "NOT FOUND",
-        "briquet griffon vendeen": "NOT FOUND",
-        "akita american": "NOT FOUND",
-        "berger créole": "NOT FOUND",
-        "kelpie australien": "Australian Kelpie",
-        "bleu de gascogne": "NOT FOUND",
-        "grand anglo francais": "NOT FOUND",
-        "braque d'auvergne": "NOT FOUND",
-        "braque allemand": "German Shorthaired Pointer",
-        "bulldog continental": "NOT FOUND",
-        "schipperke": "Schipperke",
-        "chien de montagne": "NOT FOUND",
-        "schnauzer geant": "Giant Schnauzer"
-    }
+        "beagle": {
+            "matched_breed": "Beagle",
+            "potential_breeds": ["Beagle"]
+        },
+        "akita inu": {
+            "matched_breed": "Akita",
+            "potential_breeds": ["Akita"]
+        },
+        "bouledogue francais": {
+            "matched_breed": "French Bulldog",
+            "potential_breeds": ["French Bulldog"]
+        },
+        "husky siberien": {
+            "matched_breed": "Siberian Husky",
+            "potential_breeds": ["Siberian Husky"]
+        },
+        "labrador (retriever)": {
+            "matched_breed": "Labrador Retriever",
+            "potential_breeds": ["Labrador Retriever"]
+        },
+        "berger d'anatolie": {
+            "matched_breed": "Anatolian Shepherd Dog",
+            "potential_breeds": ["Anatolian Shepherd Dog"]
+        },
+        "anglo": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "griffon nivernais": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "epagneul breton": {
+            "matched_breed": "Brittany",
+            "potential_breeds": ["Brittany"]
+        },
+        "berger": {
+            "matched_breed": null,
+            "potential_breeds": [
+            "German Shepherd Dog",
+            "Belgian Malinois",
+            "Belgian Sheepdog",
+            "Belgian Tervuren",
+            "Berger Picard",
+            "Pyrenean Shepherd",
+            "King Shepherd",
+            "Caucasian Shepherd Dog",
+            "Central Asian Shepherd Dog",
+            "Norwegian Buhund",
+            "Swedish Vallhund",
+            "Estrela Mountain Dog",
+            "Maremma Sheepdog",
+            "Australian Shepherd",
+            "Border Sheepdog",
+            "Dutch Shepherd",
+            "Shiloh Shepherd",
+            "Australian Cattle Dog"
+            ]
+        },
+        "boxer": {
+            "matched_breed": "Boxer",
+            "potential_breeds": ["Boxer"]
+        },
+        "drahthaar": {
+            "matched_breed": "German Wirehaired Pointer",
+            "potential_breeds": ["German Wirehaired Pointer"]
+        },
+        "griffon a poil dur korthals": {
+            "matched_breed": "Wirehaired Pointing Griffon",
+            "potential_breeds": ["Wirehaired Pointing Griffon"]
+        },
+        "chien loup tcheque": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "berger belge malinois": {
+            "matched_breed": "Belgian Malinois",
+            "potential_breeds": ["Belgian Malinois"]
+        },
+        "berger allemand": {
+            "matched_breed": "German Shepherd Dog",
+            "potential_breeds": ["German Shepherd Dog"]
+        },
+        "berger de beauce": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "braque": {
+            "matched_breed": "Braque du Bourbonnais",
+            "potential_breeds": ["Braque du Bourbonnais"]
+        },
+        "dogue argentin": {
+            "matched_breed": "Dogo Argentino",
+            "potential_breeds": ["Dogo Argentino"]
+        },
+        "chihuahua": {
+            "matched_breed": "Chihuahua",
+            "potential_breeds": ["Chihuahua"]
+        },
+        "cane corso": {
+            "matched_breed": "Cane Corso",
+            "potential_breeds": ["Cane Corso"]
+        },
+        "border collie": {
+            "matched_breed": "Border Collie",
+            "potential_breeds": ["Border Collie"]
+        },
+        "golden retriever": {
+            "matched_breed": "Golden Retriever",
+            "potential_breeds": ["Golden Retriever"]
+        },
+        "spitz": {
+            "matched_breed": "German Spitz",
+            "potential_breeds": ["German Spitz"]
+        },
+        "teckel": {
+            "matched_breed": "Dachshund",
+            "potential_breeds": ["Dachshund"]
+        },
+        "griffon": {
+            "matched_breed": null,
+            "potential_breeds": [
+            "Wirehaired Pointing Griffon",
+            "Brussels Griffon",
+            "Briard",
+            "Petit Basset Griffon Vendéen"
+            ]
+        },
+        "ratier": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "rottweiler": {
+            "matched_breed": "Rottweiler",
+            "potential_breeds": ["Rottweiler"]
+        },
+        "pointer": {
+            "matched_breed": "Pointer",
+            "potential_breeds": ["Pointer"]
+        },
+        "setter anglais": {
+            "matched_breed": "English Setter",
+            "potential_breeds": ["English Setter"]
+        },
+        "berger des pyrenees": {
+            "matched_breed": "Pyrenean Shepherd",
+            "potential_breeds": ["Pyrenean Shepherd"]
+        },
+        "american staffordshire": {
+            "matched_breed": "American Staffordshire Terrier",
+            "potential_breeds": ["American Staffordshire Terrier"]
+        },
+        "saint bernard": {
+            "matched_breed": "Saint Bernard",
+            "potential_breeds": ["Saint Bernard"]
+        },
+        "dobermann": {
+            "matched_breed": "Doberman Pinscher",
+            "potential_breeds": ["Doberman Pinscher"]
+        },
+        "chien courant": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "basset": {
+            "matched_breed": "Basset Hound",
+            "potential_breeds": ["Basset Hound"]
+        },
+        "epagneul": {
+            "matched_breed": null,
+            "potential_breeds": [
+            "Brittany",
+            "English Cocker Spaniel",
+            "English Springer Spaniel",
+            "Cocker Spaniel",
+            "French Spaniel"
+            ]
+        },
+        "bouvier bernois": {
+            "matched_breed": "Bernese Mountain Dog",
+            "potential_breeds": ["Bernese Mountain Dog"]
+        },
+        "dogo canario": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "berger belge groenendael": {
+            "matched_breed": "Belgian Sheepdog",
+            "potential_breeds": ["Belgian Sheepdog"]
+        },
+        "bull dog américain": {
+            "matched_breed": "American Bulldog",
+            "potential_breeds": ["American Bulldog"]
+        },
+        "jack russel terrier": {
+            "matched_breed": "Jack Russell Terrier",
+            "potential_breeds": ["Jack Russell Terrier"]
+        },
+        "berger belge tervueren": {
+            "matched_breed": "Belgian Tervuren",
+            "potential_breeds": ["Belgian Tervuren"]
+        },
+        "shar pei": {
+            "matched_breed": "Chinese Shar-Pei",
+            "potential_breeds": ["Chinese Shar-Pei"]
+        },
+        "bouvier australien": {
+            "matched_breed": "Australian Cattle Dog",
+            "potential_breeds": ["Australian Cattle Dog"]
+        },
+        "levrier": {
+            "matched_breed": "Greyhound",
+            "potential_breeds": ["Greyhound"]
+        },
+        "chow chow": {
+            "matched_breed": "Chow Chow",
+            "potential_breeds": ["Chow Chow"]
+        },
+        "berger australien d'amérique": {
+            "matched_breed": null,
+            "potential_breeds": [
+            "Australian Shepherd",
+            "Australian Kelpie",
+            "Australian Cattle Dog"
+            ]
+        },
+        "dalmatien": {
+            "matched_breed": "Dalmatian",
+            "potential_breeds": ["Dalmatian"]
+        },
+        "bull terrier": {
+            "matched_breed": "Bull Terrier",
+            "potential_breeds": ["Bull Terrier"]
+        },
+        "terrier": {
+            "matched_breed": null,
+            "potential_breeds": [
+            "Airedale Terrier",
+            "Bedlington Terrier",
+            "Border Terrier",
+            "Cairn Terrier",
+            "Cesky Terrier",
+            "Dandie Dinmont Terrier",
+            "Fox Terrier",
+            "Glen of Imaal Terrier",
+            "Irish Terrier",
+            "Jack Russell Terrier",
+            "Lakeland Terrier",
+            "Manchester Terrier",
+            "Miniature Schnauzer",
+            "Norfolk Terrier",
+            "Norwich Terrier",
+            "Scottish Terrier",
+            "Sealyham Terrier",
+            "Skye Terrier",
+            "Soft Coated Wheaten Terrier",
+            "West Highland White Terrier"
+            ]
+        },
+        "bouledogue américain": {
+            "matched_breed": "American Bulldog",
+            "potential_breeds": ["American Bulldog"]
+        },
+        "berger hollandais": {
+            "matched_breed": "Dutch Shepherd",
+            "potential_breeds": ["Dutch Shepherd"]
+        },
+        "bouledogue anglais": {
+            "matched_breed": "Bulldog",
+            "potential_breeds": ["Bulldog"]
+        },
+        "porcelaine": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "dogue allemand": {
+            "matched_breed": "Great Dane",
+            "potential_breeds": ["Great Dane"]
+        },
+        "pinscher moyen": {
+            "matched_breed": "Standard Schnauzer",
+            "potential_breeds": ["Standard Schnauzer"]
+        },
+        "epagneul francais": {
+            "matched_breed": "French Spaniel",
+            "potential_breeds": ["French Spaniel"]
+        },
+        "fox terrier poil dur": {
+            "matched_breed": "Fox Terrier",
+            "potential_breeds": ["Fox Terrier"]
+        },
+        "pinscher nain": {
+            "matched_breed": "Miniature Pinscher",
+            "potential_breeds": ["Miniature Pinscher"]
+        },
+        "bichon": {
+            "matched_breed": "Bichon Frise",
+            "potential_breeds": ["Bichon Frise"]
+        },
+        "rhodesian ridgeback": {
+            "matched_breed": "Rhodesian Ridgeback",
+            "potential_breeds": ["Rhodesian Ridgeback"]
+        },
+        "montagne des pyrénées": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "yorkshire terrier": {
+            "matched_breed": "Yorkshire Terrier",
+            "potential_breeds": ["Yorkshire Terrier"]
+        },
+        "coton de tulear": {
+            "matched_breed": "Coton de Tulear",
+            "potential_breeds": ["Coton de Tulear"]
+        },
+        "pekin ois": {
+            "matched_breed": "Pekingese",
+            "potential_breeds": ["Pekingese"]
+        },
+        "dogue de bordeaux": {
+            "matched_breed": "Dogue de Bordeaux",
+            "potential_breeds": ["Dogue de Bordeaux"]
+        },
+        "berger du caucase": {
+            "matched_breed": "Caucasian Shepherd Dog",
+            "potential_breeds": ["Caucasian Shepherd Dog"]
+        },
+        "dogue": {
+            "matched_breed": null,
+            "potential_breeds": [
+            "Great Dane",
+            "Dogue de Bordeaux",
+            "Neapolitan Mastiff",
+            "Dogo Argentino",
+            "Cane Corso",
+            "Bullmastiff",
+            "Mastiff",
+            "Pyrenean Mastiff"
+            ]
+        },
+        "jadg terrier": {
+            "matched_breed": null,
+            "potential_breeds": null
+        },
+        "springer": {"matched_breed": "English Springer Spaniel", "potential_breeds": ["English Springer Spaniel"]},
+        "fox terrier poil lisse": {"matched_breed": "Fox Terrier", "potential_breeds": ["Fox Terrier"]},
+        "griffon fauve de bretagne": {"matched_breed": null, "potential_breeds": null},
+        "staffordshire bull terrier": {"matched_breed": "Staffordshire Bull Terrier", "potential_breeds": ["Staffordshire Bull Terrier"]},
+        "grand bleu de gascogne": {"matched_breed": null, "potential_breeds": null},
+        "grand gascon saintongeois": {"matched_breed": null, "potential_breeds": null},
+        "shih tzu": {"matched_breed": "Shih Tzu", "potential_breeds": ["Shih Tzu"]},
+        "griffon bleu de gascogne": {"matched_breed": null, "potential_breeds": null},
+        "berger blanc suisse": {"matched_breed": null, "potential_breeds": null},
+        "chien corse": {"matched_breed": null, "potential_breeds": null},
+        "podenco": {"matched_breed": "Podenco", "potential_breeds": ["Podenco"]},
+        "berger d'asie centrale": {"matched_breed": "Central Asian Shepherd Dog", "potential_breeds": ["Central Asian Shepherd Dog"]},
+        "epagneul nain papillon": {"matched_breed": "Papillon", "potential_breeds": ["Papillon"]},
+        "ariegeois": {"matched_breed": null, "potential_breeds": null},
+        "malamute de l'alaska": {"matched_breed": "Alaskan Malamute", "potential_breeds": ["Alaskan Malamute"]},
+        "x terrier": {"matched_breed": null, "potential_breeds": ["Jack Russell Terrier","Border Terrier","Miniature Schnauzer","Manchester Terrier","Beabull","Biewer Terrier"]},
+        "basset hound": {"matched_breed": "Basset Hound", "potential_breeds": ["Basset Hound"]},
+        "basset fauve de bretagne": {"matched_breed": "Basset Fauve de Bretagne", "potential_breeds": ["Basset Fauve de Bretagne"]},
+        "grand griffon vendeen": {"matched_breed": null, "potential_breeds": null},
+        "american bully": {"matched_breed": null, "potential_breeds": null},
+        "bruno du jura": {"matched_breed": null, "potential_breeds": null},
+        "caniche moyen": {"matched_breed": "Poodle", "potential_breeds": ["Poodle"]},
+        "bichon a poil frisé": {"matched_breed": "Bichon Frise", "potential_breeds": ["Bichon Frise"]},
+        "setter gordon": {"matched_breed": "Gordon Setter", "potential_breeds": ["Gordon Setter"]},
+        "samoyede": {"matched_breed": "Samoyed", "potential_breeds": ["Samoyed"]},
+        "schnauzer moyen": {"matched_breed": "Standard Schnauzer", "potential_breeds": ["Standard Schnauzer"]},
+        "croisé / autre": {"matched_breed": null, "potential_breeds": null},
+        "berger australien kelpie": {"matched_breed": "Australian Kelpie", "potential_breeds": ["Australian Kelpie"]},
+        "staffie": {"matched_breed": "Staffordshire Bull Terrier", "potential_breeds": ["Staffordshire Bull Terrier"]},
+        "shiba inu": {"matched_breed": "Shiba Inu", "potential_breeds": ["Shiba Inu"]},
+        "terre neuve": {"matched_breed": "Newfoundland", "potential_breeds": ["Newfoundland"]},
+        "berger yougoslave": {"matched_breed": null, "potential_breeds": null},
+        "matin de naples": {"matched_breed": "Neapolitan Mastiff", "potential_breeds": ["Neapolitan Mastiff"]},
+        "schnauzer nain": {"matched_breed": "Miniature Schnauzer", "potential_breeds": ["Miniature Schnauzer"]},
+        "epagneul japonais": {"matched_breed": "Japanese Chin", "potential_breeds": ["Japanese Chin"]},
+        "grand bouvier suisse": {"matched_breed": "Greater Swiss Mountain Dog", "potential_breeds": ["Greater Swiss Mountain Dog"]},
+        "chien loup de saarloos": {"matched_breed": null, "potential_breeds": null},
+        "berger de maremme et abuzzes": {"matched_breed": "Maremma Sheepdog", "potential_breeds": ["Maremma Sheepdog"]},
+        "berger catalan": {"matched_breed": null, "potential_breeds": null},
+        "briquet griffon vendeen": {"matched_breed": null, "potential_breeds": null},
+        "akita american": {"matched_breed": null, "potential_breeds": null},
+        "berger créole": {"matched_breed": null, "potential_breeds": null},
+        "kelpie australien": {"matched_breed": "Australian Kelpie", "potential_breeds": ["Australian Kelpie"]},
+        "bleu de gascogne": {"matched_breed": null, "potential_breeds": null},
+        "grand anglo francais": {"matched_breed": null, "potential_breeds": null},
+        "braque d'auvergne": {"matched_breed": null, "potential_breeds": null},
+        "braque allemand": {"matched_breed": "German Shorthaired Pointer", "potential_breeds": ["German Shorthaired Pointer"]},
+        "bulldog continental": {"matched_breed": null, "potential_breeds": null},
+        "schipperke": {"matched_breed": "Schipperke", "potential_breeds": ["Schipperke"]},
+        "chien de montagne": {"matched_breed": null, "potential_breeds": null},
+        "schnauzer geant": {"matched_breed": "Giant Schnauzer", "potential_breeds": ["Giant Schnauzer"]}
+    },
+
+    "seconde chance" : {
+        "chien croise": {"matched_breed": null, "potential_breeds": null},
+        "berger": {"matched_breed": null, "potential_breeds": ["German Shepherd Dog", "Belgian Sheepdog", "Bergamasco Sheepdog", "Berger Picard", "Australian Shepherd", "King Shepherd", "Shiloh Shepherd", "Corman Shepherd", "Croatian Sheepdog", "Central Asian Shepherd Dog", "Icelandic Sheepdog", "Pyrenean Shepherd", "Portuguese Sheepdog"]},
+        "cane corso": {"matched_breed": "Cane Corso", "potential_breeds": ["Cane Corso"]},
+        "epagneul pekinois": {"matched_breed": "Pekingese", "potential_breeds": ["Pekingese"]},
+        "chien croisé petit": {"matched_breed": null, "potential_breeds": null},
+        "chihuahua": {"matched_breed": "Chihuahua", "potential_breeds": ["Chihuahua"]},
+        "epagneul japonais": {"matched_breed": "Japanese Chin", "potential_breeds": ["Japanese Chin"]},
+        "rhodesian ridgeback": {"matched_breed": "Rhodesian Ridgeback", "potential_breeds": ["Rhodesian Ridgeback"]},
+        "american bully": {"matched_breed": null, "potential_breeds": ["American Pit Bull Terrier", "American Staffordshire Terrier", "American Pugabull"]},
+        "chien croisé moyen": {"matched_breed": null, "potential_breeds": null},
+        "staffordshire americain terrier": {"matched_breed": "Staffordshire Bull Terrier", "potential_breeds": ["Staffordshire Bull Terrier"]},
+        "braque": {"matched_breed": null, "potential_breeds": ["German Shorthaired Pointer", "German Longhaired Pointer", "Braque du Bourbonnais", "Braque Francais", "Braque de Weimar", "Pointer", "Small Munsterlander Pointer", "German Wirehaired Pointer"]},
+        "griffon": {"matched_breed": null, "potential_breeds": ["Brussels Griffon", "Briquet Griffon Vendeen", "Wirehaired Pointing Griffon"]},
+        "bichon a poil frise": {"matched_breed": "Bichon Frise", "potential_breeds": ["Bichon Frise"]},
+        "dogue": {"matched_breed": null, "potential_breeds": ["Dogue de Bordeaux", "Dogo Argentino", "Neapolitan Mastiff", "Mastiff"]},
+        "pinscher nain": {"matched_breed": "Miniature Pinscher", "potential_breeds": ["Miniature Pinscher"]},
+        "spitz nain": {"matched_breed": "German Spitz", "potential_breeds": ["German Spitz"]},
+        "berger créole": {"matched_breed": null, "potential_breeds": null},
+        "fox terrier": {"matched_breed": "Fox Terrier", "potential_breeds": ["Fox Terrier"]},
+        "berger belge": {"matched_breed": null, "potential_breeds": ["Belgian Laekenois", "Belgian Malinois", "Belgian Sheepdog", "Belgian Tervuren"]},
+        "berger malinois": {"matched_breed": "Belgian Malinois", "potential_breeds": ["Belgian Malinois"]},
+        "labrador": {"matched_breed": "Labrador Retriever", "potential_breeds": ["Labrador Retriever"]},
+        "dogue argentin": {"matched_breed": "Dogo Argentino", "potential_breeds": ["Dogo Argentino"]},
+        "beauceron": {"matched_breed": null, "potential_breeds": ["Briard"]},
+        "braque francais, type gascogne": {"matched_breed": "Braque du Bourbonnais", "potential_breeds": ["Braque du Bourbonnais"]},
+        "royal bourbon": {"matched_breed": null, "potential_breeds": ["Braque du Bourbonnais"]},
+        "berger allemand": {"matched_breed": "German Shepherd Dog", "potential_breeds": ["German Shepherd Dog"]},
+        "beagle": {"matched_breed": "Beagle", "potential_breeds": ["Beagle"]},
+        "podenco": {"matched_breed": null, "potential_breeds": null},
+        "bouledogue francais": {"matched_breed": "French Bulldog", "potential_breeds": ["French Bulldog"]},
+        "briquet griffon vendeen": {"matched_breed": null, "potential_breeds": null},
+        "bichon maltais": {"matched_breed": "Maltese", "potential_breeds": ["Maltese"]},
+        "bull terrier": {"matched_breed": "Bull Terrier", "potential_breeds": ["Bull Terrier"]},
+        "grand bleu de gascogne": {"matched_breed": null, "potential_breeds": null},
+        "bouledogue anglais": {"matched_breed": "Bulldog", "potential_breeds": ["Bulldog"]},
+        "border collie": {"matched_breed": "Border Collie", "potential_breeds": ["Border Collie"]},
+        "chien courant": {"matched_breed": null, "potential_breeds": null},
+        "dogue de bordeaux": {"matched_breed": "Dogue de Bordeaux", "potential_breeds": ["Dogue de Bordeaux"]},
+        "setter gordon": {"matched_breed": "Gordon Setter", "potential_breeds": ["Gordon Setter"]},
+        "braque de weimar": {"matched_breed": null, "potential_breeds": null},
+        "levrier irlandais": {"matched_breed": "Irish Wolfhound", "potential_breeds": ["Irish Wolfhound"]},
+        "malamute de l'alaska": {"matched_breed": "Alaskan Malamute", "potential_breeds": ["Alaskan Malamute"]},
+        "epagneul breton": {"matched_breed": "Brittany", "potential_breeds": ["Brittany"]},
+        "drahthaar": {"matched_breed": "German Wirehaired Pointer", "potential_breeds": ["German Wirehaired Pointer"]},
+        "terrier": {"matched_breed": null, "potential_breeds": ["Bedlington Terrier", "Cairn Terrier", "Glen of Imaal Terrier", "Lakeland Terrier", "Norfolk Terrier", "Norwich Terrier", "Scottish Terrier", "Sealyham Terrier", "Soft Coated Wheaten Terrier", "West Highland White Terrier", "Yorkshire Terrier", "Miniature Schnauzer", "Biewer Terrier"]},
+        "berger australien": {"matched_breed": "Australian Shepherd", "potential_breeds": ["Australian Shepherd"]},
+        "basset fauve de bretagne": {"matched_breed": "Basset Fauve de Bretagne", "potential_breeds": ["Basset Fauve de Bretagne"]},
+        "bouledogue américain": {"matched_breed": "American Bulldog", "potential_breeds": ["American Bulldog"]},
+        "fox terrier poil dur": {"matched_breed": "Fox Terrier", "potential_breeds": ["Fox Terrier"]},
+        "chien de rhodesie a crete dorsale": {"matched_breed": "Rhodesian Ridgeback", "potential_breeds": ["Rhodesian Ridgeback"]},
+        "setter anglais": {"matched_breed": "English Setter", "potential_breeds": ["English Setter"]},
+        "rottweiler": {"matched_breed": "Rottweiler", "potential_breeds": ["Rottweiler"]},
+        "galgo": {"matched_breed": null, "potential_breeds": null},
+        "akita americain": {"matched_breed": "Akita", "potential_breeds": ["Akita"]},
+        "terrier jack russell": {"matched_breed": "Jack Russell Terrier", "potential_breeds": ["Jack Russell Terrier"]},
+        "berger des pyrenees a poil long": {"matched_breed": "Pyrenean Shepherd", "potential_breeds": ["Pyrenean Shepherd"]},
+        "briard": {"matched_breed": "Briard", "potential_breeds": ["Briard"]},
+        "pudelpointer": {"matched_breed": "Pudelpointer", "potential_breeds": ["Pudelpointer"]},
+        "saint bernard": {"matched_breed": "Saint Bernard", "potential_breeds": ["Saint Bernard"]},
+        "chien loup de saarloos": {"matched_breed": "Shollie", "potential_breeds": ["Shollie"]},
+        "levrier": {"matched_breed": null, "potential_breeds": null},
+        "levrier espagnol": {"matched_breed": null, "potential_breeds": null},
+        "berger hollandais": {"matched_breed": null, "potential_breeds": ["Belgian Laekenois", "Belgian Malinois", "Belgian Sheepdog", "Belgian Tervuren"]},
+        "fauve de bretagne": {"matched_breed": null, "potential_breeds": ["Basset Fauve de Bretagne"]},
+        "staffordshire bull terrier": {"matched_breed": "Staffordshire Bull Terrier", "potential_breeds": ["Staffordshire Bull Terrier"]},
+        "grand anglo-francais tricolore": {"matched_breed": null, "potential_breeds": null},
+        "bouledogue continental": {"matched_breed": null, "potential_breeds": null},
+        "epagneul": {"matched_breed": null, "potential_breeds": ["English Cocker Spaniel", "Cocker Spaniel", "English Setter", "Irish Setter", "Field Spaniel", "Clumber Spaniel", "American Water Spaniel", "Chesapeake Bay Retriever", "Brittany", "English Springer Spaniel", "French Spaniel"]},
+        "porcelaine": {"matched_breed": "Braque du Bourbonnais", "potential_breeds": ["Braque du Bourbonnais"]},
+        "mâtin espagnol": {"matched_breed": null, "potential_breeds": null},
+        "chien croisé grand": {"matched_breed": null, "potential_breeds": null},
+        "bruno du jura": {"matched_breed": null, "potential_breeds": null},
+        "fox terrier poil lisse": {"matched_breed": "Fox Terrier", "potential_breeds": ["Fox Terrier"]},
+        "basset": {"matched_breed": null, "potential_breeds": ["Basset Hound", "Basset Fauve de Bretagne", "Basset Retriever"]},
+        "samoyede": {"matched_breed": "Samoyed", "potential_breeds": ["Samoyed"]},
+        "setter lemon": {"matched_breed": null, "potential_breeds": ["English Setter", "Irish Setter"]},
+        "braque allemand": {"matched_breed": "German Shorthaired Pointer", "potential_breeds": ["German Shorthaired Pointer"]},
+        "boxer": {"matched_breed": "Boxer", "potential_breeds": ["Boxer"]},
+        "bodeguero": {"matched_breed": null, "potential_breeds": null},
+        "podenco d'ibiza": {"matched_breed": null, "potential_breeds": null},
+        "chien nu du perou": {"matched_breed": null, "potential_breeds": null},
+        "bouvier australien": {"matched_breed": null, "potential_breeds": ["Australian Shepherd", "Australian Cattle Dog", "Australian Kelpie", "Australian Retriever", "Australian Terrier"]},
+        "chow chow": {"matched_breed": "Chow Chow", "potential_breeds": ["Chow Chow"]},
+        "golden retriever": {"matched_breed": "Golden Retriever", "potential_breeds": ["Golden Retriever"]},
+        "pointer anglais": {"matched_breed": "Pointer", "potential_breeds": ["Pointer"]},
+        "ratier de prague": {"matched_breed": null, "potential_breeds": null},
+        "teckel poil long": {"matched_breed": "Dachshund", "potential_breeds": ["Dachshund"]},
+        "chihuahua à poil ras": {"matched_breed": "Chihuahua", "potential_breeds": ["Chihuahua"]},
+        "matin de majorque": {"matched_breed": null, "potential_breeds": null},
+        "laika russo europeen": {"matched_breed": null, "potential_breeds": null},
+        "grand anglo-francais blanc et orange": {"matched_breed": null, "potential_breeds": null},
+        "berger belge groenendael": {"matched_breed": "Belgian Sheepdog", "potential_breeds": ["Belgian Sheepdog"]},
+        "saluki": {"matched_breed": "Saluki", "potential_breeds": ["Saluki"]},
+        "chien courant serbe": {"matched_breed": null, "potential_breeds": null},
+        "cocker spaniel americain": {"matched_breed": "English Cocker Spaniel", "potential_breeds": ["English Cocker Spaniel"]},
+        "yorkshire terrier": {"matched_breed": "Yorkshire Terrier", "potential_breeds": ["Yorkshire Terrier"]},
+        "teckel": {"matched_breed": "Dachshund", "potential_breeds": ["Dachshund"]},
+        "husky de siberie": {"matched_breed": "Siberian Husky", "potential_breeds": ["Siberian Husky"]},
+        "bouvier bernois": {"matched_breed": "Bernese Mountain Dog", "potential_breeds": ["Bernese Mountain Dog"]},
+        "chien d'eau espagnol": {"matched_breed": null, "potential_breeds": null},
+        "ariegeois": {"matched_breed": null, "potential_breeds": null},
+        "berger australien miniature": {"matched_breed": null, "potential_breeds": ["Australian Shepherd"]},
+        "griffon a poil dur korthals": {"matched_breed": null, "potential_breeds": null},
+        "griffon nivernais": {"matched_breed": null, "potential_breeds": null},
+        "akita inu": {"matched_breed": "Akita", "potential_breeds": ["Akita"]},
+        "shih tzu": {"matched_breed": "Shih Tzu", "potential_breeds": ["Shih Tzu"]},
+        "gascon saintongeois": {"matched_breed": null, "potential_breeds": null},
+        "podengo portugais": {"matched_breed": "Portuguese Podengo Pequeno", "potential_breeds": ["Portuguese Podengo Pequeno"]},
+        "shar pei": {"matched_breed": "Chinese Shar-Pei", "potential_breeds": ["Chinese Shar-Pei"]},
+        "dobermann": {"matched_breed": "Doberman Pinscher", "potential_breeds": ["Doberman Pinscher"]},
+        "berger d anatolie": {"matched_breed": "Anatolian Shepherd Dog", "potential_breeds": ["Anatolian Shepherd Dog"]},
+        "berger des shetland": {"matched_breed": "Shetland Sheepdog", "potential_breeds": ["Shetland Sheepdog"]},
+        "basset hound": {"matched_breed": "Basset Hound", "potential_breeds": ["Basset Hound"]},
+        "schnauzer nain": {"matched_breed": "Miniature Schnauzer", "potential_breeds": ["Miniature Schnauzer"]},
+        "berger yougoslave": {"matched_breed": null, "potential_breeds": null},
+        "spitz loup": {"matched_breed": null, "potential_breeds": ["German Spitz"]},
+        "dogue allemand": {"matched_breed": "Great Dane", "potential_breeds": ["Great Dane"]},
+        "berger d'asie centrale": {"matched_breed": "Central Asian Shepherd Dog", "potential_breeds": ["Central Asian Shepherd Dog"]},
+        "kelpie australien": {"matched_breed": "Australian Kelpie", "potential_breeds": ["Australian Kelpie"]},
+        "dalmatien": {"matched_breed": "Dalmatian", "potential_breeds": ["Dalmatian"]},
+        "teckel poil dur": {"matched_breed": "Dachshund", "potential_breeds": ["Dachshund"]},
+        "border terrier": {"matched_breed": "Border Terrier", "potential_breeds": ["Border Terrier"]},
+        "jagd terrier": {"matched_breed": "German Pinscher", "potential_breeds": ["German Pinscher"]},
+        "berger du caucase": {"matched_breed": "Caucasian Shepherd Dog", "potential_breeds": ["Caucasian Shepherd Dog"]},
+        "spitz allemand": {"matched_breed": "German Spitz", "potential_breeds": ["German Spitz"]},
+        "basset des alpes": {"matched_breed": null, "potential_breeds": null},
+        "caniche": {"matched_breed": "Poodle", "potential_breeds": ["Poodle"]},
+        "teckel poil court": {"matched_breed": "Dachshund", "potential_breeds": ["Dachshund"]},
+        "chien courant tricolore serbe": {"matched_breed": null, "potential_breeds": null},
+        "carlin": {"matched_breed": "Pug", "potential_breeds": ["Pug"]},
+        "berger blanc suisse": {"matched_breed": null, "potential_breeds": ["Great Pyrenees"]},
+        "griffon bleu de gascogne": {"matched_breed": "Braque du Bourbonnais", "potential_breeds": ["Braque du Bourbonnais"]},
+        "coton de tulear": {"matched_breed": "Coton de Tulear", "potential_breeds": ["Coton de Tulear"]},
+        "cocker spaniel anglais": {"matched_breed": "English Cocker Spaniel", "potential_breeds": ["English Cocker Spaniel"]},
+        "chien de montagne des pyrenees": {"matched_breed": null, "potential_breeds": ["Great Pyrenees"]},
+        "chien loup tchecoslovaque": {"matched_breed": null, "potential_breeds": null},
+        "chihuahua à poil long": {"matched_breed": "Chihuahua", "potential_breeds": ["Chihuahua"]},
+        "beagle harrier": {"matched_breed": null, "potential_breeds": ["Beagle", "English Foxhound"]},
+        "petit basset griffon vendeen": {"matched_breed": "Petit Basset Griffon Vendéen", "potential_breeds": ["Petit Basset Griffon Vendéen"]},
+        "tervueren": {"matched_breed": "Belgian Tervuren", "potential_breeds": ["Belgian Tervuren"]},
+        "briquet de provence": {"matched_breed": null, "potential_breeds": null},
+        "bichon havanais": {"matched_breed": "Havanese", "potential_breeds": ["Havanese"]},
+        "anglo francais de petite venerie": {"matched_breed": null, "potential_breeds": null},
+        "griffon belge": {"matched_breed": "Brussels Griffon", "potential_breeds": ["Brussels Griffon"]},
+        "eurasier": {"matched_breed": "Eurasier", "potential_breeds": ["Eurasier"]},
+        "braque francais, type pyrenees": {"matched_breed": "Braque du Bourbonnais", "potential_breeds": ["Braque du Bourbonnais"]},
+        "basset bleu de gascogne": {"matched_breed": null, "potential_breeds": null},
+        "braque d auvergne": {"matched_breed": null, "potential_breeds": null},
+        "dogue des canaries": {"matched_breed": null, "potential_breeds": null},
+        "epagneul francais": {"matched_breed": "French Spaniel", "potential_breeds": ["French Spaniel"]},
+        "chien de cour italien": {"matched_breed": null, "potential_breeds": null},
+        "basenji": {"matched_breed": "Basenji", "potential_breeds": ["Basenji"]},
+        "chien de canaan": {"matched_breed": "Canaan Dog", "potential_breeds": ["Canaan Dog"]},
+        "mâtin des pyrenees": {"matched_breed": "Great Pyrenees", "potential_breeds": ["Great Pyrenees"]},
+        "bouvier suisse": {"matched_breed": null, "potential_breeds": ["Greater Swiss Mountain Dog"]},
+        "brachet allemand": {"matched_breed": "German Shorthaired Pointer", "potential_breeds": ["German Shorthaired Pointer"]},
+        "welsh corgi pembroke": {"matched_breed": "Pembroke Welsh Corgi", "potential_breeds": ["Pembroke Welsh Corgi"]},
+        "american pit bull terrier": {"matched_breed": "American Pit Bull Terrier", "potential_breeds": ["American Pit Bull Terrier"]},
+        "terrier bresilien": {"matched_breed": null, "potential_breeds": null},
+        "setter irlandais rouge & blanc": {"matched_breed": "Irish Red And White Setter", "potential_breeds": ["Irish Red And White Setter"]},
+        "brachet autrichien": {"matched_breed": null, "potential_breeds": null},
+        "mâtin napolitain": {"matched_breed": "Neapolitan Mastiff", "potential_breeds": ["Neapolitan Mastiff"]},
+        "billy": {"matched_breed": null, "potential_breeds": null},
+        "chien d'ours de carelie": {"matched_breed": null, "potential_breeds": null},
+        "basset de westphalie": {"matched_breed": null, "potential_breeds": null},
+        "hovawart": {"matched_breed": "Hovawart", "potential_breeds": ["Hovawart"]},
+        "berger americain": {"matched_breed": null, "potential_breeds": ["Australian Shepherd", "American Staffordshire Terrier"]},
+        "bulldog": {"matched_breed": "Bulldog", "potential_breeds": ["Bulldog"]},
+        "bouvier de l'appenzell": {"matched_breed": "Appenzeller Sennenhunde", "potential_breeds": ["Appenzeller Sennenhunde"]},
+        "berger catalan": {"matched_breed": null, "potential_breeds": null},
+        "pinscher allemand": {"matched_breed": "German Pinscher", "potential_breeds": ["German Pinscher"]},
+        "bichon russe": {"matched_breed": "Bolognese", "potential_breeds": ["Bolognese"]},
+        "colley": {"matched_breed": "Collie", "potential_breeds": ["Collie"]},
+        "chien courant polonais": {"matched_breed": null, "potential_breeds": null},
+        "epagneul papillon": {"matched_breed": "Papillon", "potential_breeds": ["Papillon"]},
+        "chien courant suisse": {"matched_breed": null, "potential_breeds": null},
+        "bull terrier miniature": {"matched_breed": "Miniature Bull Terrier", "potential_breeds": ["Bull Terrier"]},
+        "parson terrier": {"matched_breed": null, "potential_breeds": ["Jack Russell Terrier"]},
+        "bearded collie": {"matched_breed": "Bearded Collie", "potential_breeds": ["Bearded Collie"]},
+        "cavalier king charles": {"matched_breed": "Cavalier King Charles Spaniel", "potential_breeds": ["Cavalier King Charles Spaniel"]},
+        "chien de leonberg": {"matched_breed": "Leonberger", "potential_breeds": ["Leonberger"]},
+        "schnauzer": {"matched_breed": null, "potential_breeds": ["Miniature Schnauzer", "Standard Schnauzer", "Giant Schnauzer"]},
+        "welsh corgi cardigan": {"matched_breed": "Cardigan Welsh Corgi", "potential_breeds": ["Cardigan Welsh Corgi"]},
+        "dogue du tibet": {"matched_breed": null, "potential_breeds": null},
+        "shiba": {"matched_breed": "Shiba Inu", "potential_breeds": ["Shiba Inu"]},
+        "mastiff": {"matched_breed": "Mastiff", "potential_breeds": ["Mastiff"]},
+        "berger d'atlas": {"matched_breed": null, "potential_breeds": null},
+        "hokkaido": {"matched_breed": "Hokkaido", "potential_breeds": ["Hokkaido"]},
+        "labradoodle": {"matched_breed": "Labradoodle", "potential_breeds": ["Labradoodle"]},
+        "flat-coated retriever": {"matched_breed": "Flat-Coated Retriever", "potential_breeds": ["Flat-Coated Retriever"]},
+        "berger portugais": {"matched_breed": null, "potential_breeds": ["Portuguese Sheepdog"]},
+        "bouvier des flandres": {"matched_breed": "Bouvier des Flandres", "potential_breeds": ["Bouvier des Flandres"]},
+        "braque hongrois": {"matched_breed": null, "potential_breeds": ["Hungarian Vizsla"]},
+        "collie a poil court": {"matched_breed": null, "potential_breeds": ["Collie"]},
+        "caniche royal": {"matched_breed": null, "potential_breeds": ["Poodle"]},
+        "chien courant norvegien": {"matched_breed": null, "potential_breeds": null},
+        "chien de berger roumain de mioritza": {"matched_breed": null, "potential_breeds": null},
+        "groenlandais": {"matched_breed": null, "potential_breeds": null},
+        "labrit": {"matched_breed": null, "potential_breeds": null},
+        "chien de saint hubert": {"matched_breed": null, "potential_breeds": null},
+        "slovensky kopov": {"matched_breed": null, "potential_breeds": null},
+        "bouvier des ardennes": {"matched_breed": null, "potential_breeds": null},
+        "epagneul tibetain": {"matched_breed": null, "potential_breeds": null},
+        "basset griffon vendeen": {"matched_breed": "Petit Basset Griffon Vendéen", "potential_breeds": ["Petit Basset Griffon Vendéen"]},
+        "epagneul anglais": {"matched_breed": null, "potential_breeds": ["English Cocker Spaniel", "English Springer Spaniel"]},
+        "petit epagneul de munster": {"matched_breed": null, "potential_breeds": null},
+        "terrier de chasse allemand": {"matched_breed": null, "potential_breeds": null},
+        "field spaniel": {"matched_breed": "Field Spaniel", "potential_breeds": ["Field Spaniel"]},
+        "berger finnois de laponie": {"matched_breed": null, "potential_breeds": ["Finnish Lapphund"]},
+        "bullmastiff": {"matched_breed": "Bullmastiff", "potential_breeds": ["Bullmastiff"]},
+        "berger des mangroves": {"matched_breed": null, "potential_breeds": null},
+        "grand griffon vendeen": {"matched_breed": null, "potential_breeds": null},
+        "greyhound": {"matched_breed": "Greyhound", "potential_breeds": ["Greyhound"]},
+        "lhassa apso": {"matched_breed": "Lhasa Apso", "potential_breeds": ["Lhasa Apso"]},
+        "terre neuve": {"matched_breed": "Newfoundland", "potential_breeds": ["Newfoundland"]},
+        "pomsky": {"matched_breed": "Pomsky", "potential_breeds": ["Pomsky"]},
+        "cursinu": {"matched_breed": null, "potential_breeds": null},
+        "schnauzer geant": {"matched_breed": "Giant Schnauzer", "potential_breeds": ["Giant Schnauzer"]},
+        "griffon bruxellois": {"matched_breed": "Brussels Griffon", "potential_breeds": ["Brussels Griffon"]},
+        "petit bleu de gascogne": {"matched_breed": null, "potential_breeds": null},
+        "caniche nain": {"matched_breed": null, "potential_breeds": ["Poodle"]},
+        "basset artesien normand": {"matched_breed": null, "potential_breeds": null},
+        "west highland white terrier": {"matched_breed": "West Highland White Terrier", "potential_breeds": ["West Highland White Terrier"]},
+        "spitz japonais": {"matched_breed": null, "potential_breeds": ["Japanese Spitz"]},
+        "airedale terrier": {"matched_breed": "Airedale Terrier", "potential_breeds": ["Airedale Terrier"]},
+        "cairn terrier": {"matched_breed": "Cairn Terrier", "potential_breeds": ["Cairn Terrier"]},
+        "kai": {"matched_breed": "Kai Ken", "potential_breeds": ["Kai Ken"]},
+        "rouge de l'ouest": {"matched_breed": null, "potential_breeds": null},
+        "schipperke": {"matched_breed": "Schipperke", "potential_breeds": ["Schipperke"]}
     
+}
+
+        
 
 }
