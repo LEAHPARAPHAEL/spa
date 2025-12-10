@@ -3,6 +3,7 @@ from urllib.parse import urljoin
 import re
 import html
 import os
+import json
 
 class SecondeChanceDogsSpider(scrapy.Spider):
     name = "secondeChance"
@@ -19,6 +20,11 @@ class SecondeChanceDogsSpider(scrapy.Spider):
         "FEED_EXPORT_ENCODING": "utf-8",
     }
 
+    breeds = json.load(open("data/breeds_mapping.json", "r"))
+
+    seconde_chance_breeds = breeds["seconde chance"]
+
+
     def parse(self, response):
         # Extract each dog card
         for href in response.xpath("//div[contains(@class, 'p-6')]/div//a[contains(@href, '/animal/chien-')]/@href").getall():
@@ -30,7 +36,7 @@ class SecondeChanceDogsSpider(scrapy.Spider):
             yield response.follow(next_page, callback=self.parse)
 
     def clean(self, x):
-        return x.strip() if x else ""
+        return x.strip() if x else None
 
     def remove_colons(self, x):
         return x.replace(":", "").strip() if x else ""
@@ -47,17 +53,25 @@ class SecondeChanceDogsSpider(scrapy.Spider):
         months = 0
 
         # Match years
-        match_years = re.search(r'(\d+)\s*ans?', age_text)
+        match_years = re.search(r'(\d+)\s*years?', age_text)
         if match_years:
             years = int(match_years.group(1))
 
         # Match months
-        match_months = re.search(r'(\d+)\s*mois', age_text)
+        match_months = re.search(r'(\d+)\s*months', age_text)
         if match_months:
             months = int(match_months.group(1))
 
         age_float = years + months / 12
         return round(age_float, 2)
+    
+    def clean_dog_name(self, name):
+        name = html.unescape(name)
+        pattern = r"(\s*\(.*|\s*&.*|\s+\bQCN\b.*|\s+\bVAA\b.*|\s+\w*\d{5}.*)"
+        
+        # Replace the matching pattern with an empty string
+        cleaned_name = re.sub(pattern, "", name, flags=re.IGNORECASE)
+        return cleaned_name.strip()
 
     def age_to_category(self, age_float):
         if age_float < 1.0: 
@@ -66,6 +80,20 @@ class SecondeChanceDogsSpider(scrapy.Spider):
             return "adult"
         else:
             return "senior"
+        
+    def age_to_english(self, age_text):
+        age_text = re.sub("an", "year", age_text)
+        age_text = re.sub("mois", "months", age_text)
+
+        return age_text
+    
+    def sex_to_english(self, sex):
+        if not sex:
+            return None
+        sex = re.sub("Femelle", "Female", sex)
+        sex = re.sub("Mâle", "Male", sex)
+
+        return sex
 
     def parse_dog(self, response):
 
@@ -74,17 +102,25 @@ class SecondeChanceDogsSpider(scrapy.Spider):
             for u in response.xpath("//img[contains(@src, '/uploads/')]/@src").getall()
         ]
 
-        name = self.clean(response.xpath("//h1/text()").get())
+        name = self.clean(response.xpath("//h1/text()").get() or None)
+        if name:
+            name = self.clean_dog_name(name)
 
-        species = self.remove_colons(response.xpath("//p/strong[text()='Espèce']/following-sibling::text()").get() or "None")
+        species = self.remove_colons(response.xpath("//p/strong[text()='Espèce']/following-sibling::text()").get() or None)
 
-        race = self.remove_colons(response.xpath("//p/strong[text()='Type']/following-sibling::text()").get().lower() or "None")
+        breed = self.remove_colons(response.xpath("//p/strong[text()='Type']/following-sibling::text()").get().lower() or None)
 
-        sex = self.remove_colons(response.xpath("//p/strong[text()='Sexe']/following-sibling::text()").get() or "None")
+        sex = self.remove_colons(response.xpath("//p/strong[text()='Sexe']/following-sibling::text()").get() or None)
+        sex = self.sex_to_english(sex)
 
-        colors = self.remove_colons(response.xpath("//p/strong[text()='Couleur']/following-sibling::text()").get() or "None")
+        colors = self.remove_colons(response.xpath("//p/strong[text()='Couleur']/following-sibling::text()").get() or None)
 
-        age_text = self.remove_colons(response.xpath("//p/strong[text()='Âge']/following-sibling::text()").get() or "None")
+        age_text = self.remove_colons(response.xpath("//p/strong[text()='Âge']/following-sibling::text()").get() or None)
+        if age_text:
+            age_text = self.age_to_english(age_text)
+            age = self.age_text_to_float(age_text)
+        else:
+            age = None
 
         accepts_children = False if response.xpath("//ul[@class='particularities']/li/span[@class='icon-picto-enfant']").get() else True
 
@@ -92,34 +128,44 @@ class SecondeChanceDogsSpider(scrapy.Spider):
 
         accepts_dogs = False if response.xpath("//ul[@class='particularities']/li/span[@class='icon-picto-chien']").get() else True                    
                     
-        establishment = self.clean(response.xpath("//p[@class='my-6 font-bold text-orange-sc'][1]/a/u/text()").get() or "None")
+        establishment = self.clean(response.xpath("//p[@class='my-6 font-bold text-orange-sc'][1]/a/u/text()").get() or None)
 
-        establishment_url = self.clean(response.xpath("//p[@class='my-6 font-bold text-orange-sc'][1]/a/@href").get() or "None")
+        establishment_url = self.clean(response.xpath("//p[@class='my-6 font-bold text-orange-sc'][1]/a/@href").get() or None)
 
-        description_nodes = response.xpath("//p[@class='font-bold']/following-sibling::p[not(strong)]//text()").getall()
-        description = self.decode(" ".join(description_nodes))
-        
-        if not race:
-            return
-        os.makedirs("data", exist_ok=True)
-        filepath = "data/breeds.txt"
-        
-        # Read existing breeds (if file exists)
-        if os.path.exists(filepath):
-            mode = 'a'
-            with open(filepath, "r", encoding="utf-8") as f:
-                existing = {line.strip().lower() for line in f if line.strip()}
+        #description_nodes = response.xpath("//p[@class='font-bold']/following-sibling::p[not(strong)]//text()").getall()
+        #description = self.decode(" ".join(description_nodes))
+
+        # The commented part below was useful to extract all the breeds in the database to construct a mapping with the breeds dataset.
+        '''
+        if breed:
+
+
+            os.makedirs("data", exist_ok=True)
+            filepath = "data/breeds.txt"
+            
+            # Read existing breeds (if file exists)
+            if os.path.exists(filepath):
+                mode = 'a'
+                with open(filepath, "r", encoding="utf-8") as f:
+                    existing = {line.strip().lower() for line in f if line.strip()}
+            else:
+                mode = 'w'
+                existing = set()
+            
+            # Add only if new
+            if breed.lower() not in existing:
+                with open(filepath, mode, encoding="utf-8") as f:
+                    f.write(breed.lower().strip() + "\n")
+                self.logger.info(f"Added new breed: {breed}")
+        '''
+            
+        if breed:
+            matched_breed =  self.seconde_chance_breeds.get(breed.lower(), {}).get("matched_breed", None)
         else:
-            mode = 'w'
-            existing = set()
+            matched_breed = None
         
-        # Add only if new
-        if race.lower() not in existing:
-            with open(filepath, mode, encoding="utf-8") as f:
-                f.write(race.lower().strip() + "\n")
-            self.logger.info(f"Added new breed: {race}")
 
-        age = self.age_text_to_float(age_text)
+
         yield {
             "source": "Seconde Chance",
             "url": response.url,
@@ -129,12 +175,13 @@ class SecondeChanceDogsSpider(scrapy.Spider):
             "age text": age_text,
             "age" : age,
             "category" : self.age_to_category(age),
-            "race": race,
+            "breed": breed,
+            "matched_breed" : matched_breed,
             "colors": colors,
             "accepts_dogs" : accepts_dogs,
             "accepts_cats" : accepts_cats,
             "accepts_children" : accepts_children,
-            "description": description,
+            #"description": description,
             "establishment" : establishment,
             "establishment_url" : establishment_url,
             "image_urls": image_urls

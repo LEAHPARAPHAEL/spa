@@ -38,26 +38,75 @@ class SQLitePipeline:
         self.conn = sqlite3.connect("data/dogs.db")
         self.cur = self.conn.cursor()
         self.cur.execute("""
-            CREATE TABLE IF NOT EXISTS raw_data (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                source TEXT,
-                url TEXT UNIQUE,
-                raw_json TEXT,
-                scraped_at TEXT DEFAULT CURRENT_TIMESTAMP
-            )
+        CREATE TABLE IF NOT EXISTS dogs (
+            id INTEGER PRIMARY KEY,
+            source TEXT,
+            name TEXT,
+            url TEXT UNIQUE,
+            species TEXT,
+            sex TEXT,
+            age_text TEXT,
+            age REAL,
+            category TEXT,
+            breed TEXT,
+            matched_breed TEXT,
+            colors TEXT,
+            accepts_dogs BOOL,
+            accepts_cats BOOL,
+            accepts_children BOOL,
+            establishment TEXT, 
+            establishment_url TEXT
+        )
+        """)
+
+        self.cur.execute("""
+        CREATE TABLE IF NOT EXISTS images (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            dog_id INTEGER,
+            image_url TEXT,
+            FOREIGN KEY (dog_id) REFERENCES dogs (id) ON DELETE CASCADE
+        )
         """)
         self.conn.commit()
 
     def process_item(self, item, spider):
-        import json
         self.cur.execute("""
-            INSERT OR REPLACE INTO raw_data (source, url, raw_json)
-            VALUES (?, ?, ?)
-        """, (
-            spider.name, 
-            item.get("url"), 
-            json.dumps(dict(item), ensure_ascii=False)
-        ))
+            INSERT OR IGNORE INTO dogs
+            (source, name, url, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                "Seconde chance",
+                item.get("name"),
+                item.get("url"),
+                item.get("species"),
+                item.get("sex"),
+                item.get("age_text"),
+                item.get("age"),
+                item.get("category"),
+                item.get("breed"),
+                item.get("matched_breed"),
+                item.get("colors"),
+                item.get("accepts_dogs"),
+                item.get("accepts_cats"),
+                item.get("accepts_children"),
+                item.get("establishment"),
+                item.get("establishment_url")
+            )
+        )
+
+        current_dog_id = self.cur.lastrowid
+                                
+                                
+        images = item.get("image_urls", []) 
+                                
+        if images and current_dog_id:
+            image_data = [(current_dog_id, img_url) for img_url in images]
+                                        
+            self.cur.executemany("""
+                INSERT INTO images (dog_id, image_url) 
+                VALUES (?, ?)
+            """, image_data)
+
         self.conn.commit()
         return item
 

@@ -2,7 +2,7 @@ import sqlite3
 from tabulate import tabulate
 
 # Path to your SQLite database
-db_path = "data/dogs.db"   # adjust if different
+db_path = "data/shelters.db"   # adjust if different
 
 # Connect to the database
 conn = sqlite3.connect(db_path)
@@ -17,25 +17,23 @@ for t in tables:
 
 print("\n")
 
-# Suppose your table is named 'dogs' (adjust if not)
-table_name = "raw_data"
 
+# Count how many rows
+cursor.execute(f"SELECT COUNT(*) FROM dogs")
+count = cursor.fetchone()[0]
+print(f"There are {count} records in table dogs")
 
-cursor.execute(f"SELECT * FROM breeds LIMIT 3")
+# Fetch a few sample entries
+cursor.execute(f"SELECT name, breed FROM dogs d JOIN breeds b on d.matched_breed = b.breed_name LIMIT 3")
 rows = cursor.fetchall()
 print(rows)
 
-# Count how many rows
-cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
-count = cursor.fetchone()[0]
-print(f"There are {count} records in table '{table_name}'")
-
-# Fetch a few sample entries
-cursor.execute(f"SELECT name, age, race, size, url FROM {table_name} LIMIT 10")
+cursor.execute(f"SELECT name, image_url FROM dogs d JOIN images i on d.id = i.dog_id LIMIT 3")
 rows = cursor.fetchall()
+print(rows)
 
-print("\n Sample rows:")
-print(tabulate(rows, headers=["Name", "Age", "Race", "Size", "URL"], tablefmt="pretty"))
+#print("\n Sample rows:")
+#print(tabulate(rows, headers=["Name", "Age", "Race", "Size", "URL"], tablefmt="pretty"))
 
 # Close the connection
 conn.close()

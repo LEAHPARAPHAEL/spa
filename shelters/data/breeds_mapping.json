@@ -363,7 +363,7 @@
         "basset hound": {"matched_breed": "Basset Hound", "potential_breeds": ["Basset Hound"]},
         "basset fauve de bretagne": {"matched_breed": "Basset Fauve de Bretagne", "potential_breeds": ["Basset Fauve de Bretagne"]},
         "grand griffon vendeen": {"matched_breed": null, "potential_breeds": null},
-        "american bully": {"matched_breed": null, "potential_breeds": null},
+        "american bully": {"matched_breed": "American Bulldog", "potential_breeds": ["American Bulldog"]},
         "bruno du jura": {"matched_breed": null, "potential_breeds": null},
         "caniche moyen": {"matched_breed": "Poodle", "potential_breeds": ["Poodle"]},
         "bichon a poil frisé": {"matched_breed": "Bichon Frise", "potential_breeds": ["Bichon Frise"]},
