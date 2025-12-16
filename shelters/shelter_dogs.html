@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data about Shelter Dogs in France (2026)</title>
+    <style>
+        body {font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: lightgray; }
+        .container { max-width: 800px; margin: auto; background-color: whitesmoke}
+        h1 { color: darkblue; text-align: center; }
+        h2 { margin: 20px 0; font-size: 1.3em }
+        p { margin: 20px 0; }
+        sources {margin: 20px 0; font-style: italic; color: darkblue}
+        img { display: block; max-width: 100%; height: auto; margin: 20px auto; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data about Shelter Dogs in France (2026)</h1>
+
+        <p>Now that we have some data about shelter dogs in France, we can ask ourselves about why does these dogs are in shelters.</p>
+
+        <p>Let's first evaluate which dog breeds are the most represented in shelters.</p>
+        <img src="plots/top20_breeds.png" alt="Top 20 breeds chart">
+
+        <h2>How to explain this data? Are these dogs particularly unfriendly?</h2>
+        <img src="plots/affectionate_top20.png" alt="Top 20 breeds affectionate">
+
+        <p>We can see that the top 20 most represented dog breeds have a majority of index 5 over 5 for the "Affectionate with family" index. Our hypothesis do not follow the characteristics of the most represented dogs in shelters.</p>
+
+        <h2>Let's find a new hypothesis : are these dogs difficult to train?</h2>
+        <img src="plots/easy_to_train_hist.png" alt="Easy to train">
+
+        <p>The majority of the dogs in shelter have an "Easy to train" index of 5 over 5, we cannot draw conclusions about training abilities. </p>
+
+        <h2>Unfortunately, the main reason may be the size...</h2>
+        <img src="plots/size_hist.png" alt="Size">
+
+        <p>Indeed, a large majority of shelter dogs have very large or large size. We can make the assumption that this is a recurrent excuse for abandoning dogs.</p>
+
+        <sources>Sources: <a href="https://www.la-spa.fr/" target="_blank">SPA France</a>,
+        <a href="https://www.secondechance.org/" target="_blank">Seconde Chance</a>,
+        <a href="https://www.kaggle.com/" target="_blank">Kaggle</a></sources>
+
+        <h2>Remember: adopting a shelter dog can change a life. Consider giving these wonderful dogs a forever home!</h2>
+
+    </div>
+</body>
+</html>
+
