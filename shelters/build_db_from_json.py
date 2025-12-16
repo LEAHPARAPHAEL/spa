@@ -48,7 +48,7 @@ for file in glob.glob("data/seconde_chance.jsonl"):
                 (source, name, url, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
-                    "Seconde chance",
+                    "Seconde Chance",
                     item.get("name"),
                     item.get("url"),
                     item.get("species"),

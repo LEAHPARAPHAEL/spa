@@ -19,12 +19,12 @@ print("\n")
 
 
 # Count how many rows
-cursor.execute(f"SELECT COUNT(*) FROM dogs")
+cursor.execute(f"SELECT COUNT(*) FROM dogs WHERE source ='Seconde Chance'")
 count = cursor.fetchone()[0]
 print(f"There are {count} records in table dogs")
 
 # Fetch a few sample entries
-cursor.execute(f"SELECT name, breed FROM dogs d JOIN breeds b on d.matched_breed = b.breed_name LIMIT 3")
+cursor.execute(f"SELECT source, name, breed FROM dogs d JOIN breeds b on d.matched_breed = b.breed_name WHERE source!='SPA' LIMIT 3")
 rows = cursor.fetchall()
 print(rows)
 

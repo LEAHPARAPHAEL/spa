@@ -35,7 +35,7 @@ class JsonWriterPipeline:
 class SQLitePipeline:
     def open_spider(self, spider):
         os.makedirs("data", exist_ok=True) 
-        self.conn = sqlite3.connect("data/dogs.db")
+        self.conn = sqlite3.connect("data/shelters.db")
         self.cur = self.conn.cursor()
         self.cur.execute("""
         CREATE TABLE IF NOT EXISTS dogs (
