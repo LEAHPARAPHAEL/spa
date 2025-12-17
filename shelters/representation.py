@@ -13,6 +13,14 @@ connect.close()
 
 # We can estimate various information about our scraped data
 
+# First how much of our data in each table is null to assess the quality of the tables
+
+print(dogs_df.isnull().mean() * 100)
+print(images_df.isnull().mean() * 100)
+print(breeds_df.isnull().mean() * 100)
+
+# Then some plots to make a html table that summarizes what we learned with this scraping
+
 # Number of dogs of each breeds in the shelters
 top20_breeds = dogs_df['matched_breed'].value_counts()[:20]
 
