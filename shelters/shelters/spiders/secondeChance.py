@@ -178,7 +178,7 @@ class SecondeChanceDogsSpider(scrapy.Spider):
         cleaned_name = match.group(0).strip()
 
         # Removes weird patterns that are specific to the two shelters, especially SPA
-        pattern = r"(\-|\s*\(.*|\s*&.*|\s+\bQCN\b.*|\s+\bVAA\b.*|\s+\bCHAO\b.*|\s+\bHAA\b.*|\s+\w*\d{5}.*)"
+        pattern = r"(\-|\s*\(.*|\s*&.*|\s+\bQCN\b.*|\s+\bVAA\b.*|\s+\bCAA\b.*|\s+\bOAA\b.*|\s+\bPAA\b.*|\s+\bCHAO\b.*|\s+\bHAA\b.*|\s+\w*\d{5}.*)"
         
         # Replaces the matching pattern with an empty string
         cleaned_name = re.sub(pattern, "", cleaned_name, flags=re.IGNORECASE)
