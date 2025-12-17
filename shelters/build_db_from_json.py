@@ -16,6 +16,7 @@ def main():
         source TEXT,
         name TEXT,
         url TEXT UNIQUE,
+        adopted BOOL,
         species TEXT,
         sex TEXT,
         age_text TEXT,
@@ -105,100 +106,10 @@ def main():
 
 
     # Inserts into the table dogs the records from seconde chance
-    for file in glob.glob("data/seconde_chance.jsonl"):
-        print("Loading", file)
-        with open(file, "r", encoding="utf-8") as f:
-            for line in f:
-                try:
-                    item = json.loads(line)
-                    cur.execute("""
-                    INSERT OR IGNORE INTO dogs
-                    (source, name, url, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        "Seconde Chance",
-                        item.get("name"),
-                        item.get("url"),
-                        item.get("species"),
-                        item.get("sex"),
-                        item.get("age_text"),
-                        item.get("age"),
-                        item.get("category"),
-                        item.get("breed"),
-                        item.get("matched_breed"),
-                        item.get("colors"),
-                        item.get("accepts_dogs"),
-                        item.get("accepts_cats"),
-                        item.get("accepts_children"),
-                        item.get("establishment"),
-                        item.get("establishment_url")
-                    ))
+    insert_json_into_table("data/seconde_chance.jsonl", cur, conn)
 
-                    current_dog_id = cur.lastrowid
-                                    
-                                    
-                    images = item.get("image_urls", []) 
-                                    
-                    if images and current_dog_id:
-                        image_data = [(current_dog_id, img_url) for img_url in images]
-                                            
-                        cur.executemany("""
-                            INSERT INTO images (dog_id, image_url) 
-                            VALUES (?, ?)
-                        """, image_data)
-
-
-                except json.JSONDecodeError:
-                    print("Invalid JSON line in", file)
-    conn.commit()
-
-
-    # Inserts into the table dogs the records from spa
-    for file in glob.glob("data/spa.jsonl"):
-        print("Loading", file)
-        with open(file, "r", encoding="utf-8") as f:
-            for line in f:
-                try:
-                    item = json.loads(line)
-                    cur.execute("""
-                    INSERT OR IGNORE INTO dogs
-                    (source, name, url, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        "SPA",
-                        item.get("name"),
-                        item.get("url"),
-                        item.get("species"),
-                        item.get("sex"),
-                        item.get("age_text"),
-                        item.get("age"),
-                        item.get("category"),
-                        item.get("breed"),
-                        item.get("matched_breed"),
-                        item.get("colors"),
-                        item.get("accepts_dogs"),
-                        item.get("accepts_cats"),
-                        item.get("accepts_children"),
-                        item.get("establishment"),
-                        item.get("establishment_url")
-                    ))
-
-                    current_dog_id = cur.lastrowid
-                                                
-                    images = item.get("image_urls", [])
-                                    
-                    if images and current_dog_id:
-                        image_data = [(current_dog_id, img_url) for img_url in images]
-                                            
-                        cur.executemany("""
-                            INSERT INTO images (dog_id, image_url) 
-                            VALUES (?, ?)
-                        """, image_data)
-
-
-                except json.JSONDecodeError:
-                    print("Invalid JSON line in", file)
-    conn.commit()
+    # Inserts into the table dogs the records from SPA
+    insert_json_into_table("data/spa.jsonl", cur, conn)
 
 
     # Path to the CSV dataset containing the dogs breeds
@@ -290,6 +201,56 @@ def main():
     conn.close()
     print("Database rebuilt successfully.")
 
+
+
+def insert_json_into_table(file, cur, conn):
+    print("Loading", file)
+    with open(file, "r", encoding="utf-8") as f:
+        for line in f:
+            try:
+                item = json.loads(line)
+                cur.execute("""
+                INSERT OR IGNORE INTO dogs
+                (source, name, url, adopted, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    item.get("source"),
+                    item.get("name"),
+                    item.get("url"),
+                    item.get("adopted"),
+                    item.get("species"),
+                    item.get("sex"),
+                    item.get("age_text"),
+                    item.get("age"),
+                    item.get("category"),
+                    item.get("breed"),
+                    item.get("matched_breed"),
+                    item.get("colors"),
+                    item.get("accepts_dogs"),
+                    item.get("accepts_cats"),
+                    item.get("accepts_children"),
+                    item.get("establishment"),
+                    item.get("establishment_url")
+                ))
+
+                current_dog_id = cur.lastrowid
+                                
+                                
+                images = item.get("image_urls", []) 
+                                
+                if images and current_dog_id:
+                    image_data = [(current_dog_id, img_url) for img_url in images]
+                                        
+                    cur.executemany("""
+                        INSERT INTO images (dog_id, image_url) 
+                        VALUES (?, ?)
+                    """, image_data)
+
+
+            except json.JSONDecodeError:
+                print("Invalid JSON line in", file)
+
+    conn.commit()
 
 if __name__ == "__main__":
     main()

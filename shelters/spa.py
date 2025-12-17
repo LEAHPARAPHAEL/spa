@@ -29,11 +29,9 @@ class SPA_spider:
         self.cache_dir = Path("cache")
         self.cache_dir.mkdir(exist_ok=True)
 
-        self.visited_pages_file = self.cache_dir / "spa_visited_pages.txt"
-        self.visited_dogs_file = self.cache_dir / "spa_visited_dogs.txt"
+        self.visited_dogs_file = self.cache_dir / "spa_visited_urls.txt"
 
-        # Load caches
-        self.visited_pages = set(self.visited_pages_file.read_text().splitlines()) if self.visited_pages_file.exists() else set()
+        # Load cache
         self.visited_dogs = set(self.visited_dogs_file.read_text().splitlines()) if self.visited_dogs_file.exists() else set()
 
         self.jsonl_file = Path(f"data/spa.jsonl")
@@ -57,6 +55,7 @@ class SPA_spider:
                 source TEXT,
                 name TEXT,
                 url TEXT UNIQUE,
+                adopted BOOL,
                 species TEXT,
                 sex TEXT,
                 age_text TEXT,
@@ -108,10 +107,6 @@ class SPA_spider:
         empty_pages = 0
 
         while True:
-            if str(page_number) in self.visited_pages:
-                print(f"Page {page_number} already visited.")
-                page_number += 1
-                continue  
             page_json = self.fetch_page(page_number)
             if not page_json or empty_pages >= 5:
                 break
@@ -123,27 +118,30 @@ class SPA_spider:
             # Found page, so reset counter to 0
             empty_pages = 0
             for dog_summary in page_json["results"]:
-                self.process_dog(dog_summary)
+                dog_uid = dog_summary["uid"]
+                dog_uid_clean = dog_uid.replace("animal-", "")
+
+                url = self.base_url + f"/animal/{dog_uid_clean}/"
+
+                if url in self.visited_dogs:
+                    continue
+                self.process_dog(dog_summary, url)
                 time.sleep(self.download_delay) 
 
             # Mark page as visited after all dogs are processed
-            self.visited_pages.add(str(page_number))
-            self.save_cache(self.visited_pages_file, str(page_number))
             print(f"Finished page {page_number}")
             page_number += 1
             time.sleep(self.download_delay) 
 
 
-    def process_dog(self, dog_json_summary):
+    def process_dog(self, dog_json_summary, url):
 
         dog_uid = dog_json_summary["uid"]
 
-        if dog_uid in self.visited_dogs:
-            return
-
         # Inserts the id into the placeholder field to get the url for this dog.
-        dog_url = self.dog_api.format(dog_uid)
-        resp = requests.get(dog_url)
+        dog_api_url = self.dog_api.format(dog_uid)
+
+        resp = requests.get(dog_api_url)
 
         if resp.status_code != 200:
             print(f"Failed to fetch dog {dog_uid}: {resp.status_code}")
@@ -155,7 +153,7 @@ class SPA_spider:
         infos = data["content"]["infos"]
 
         # Gets the URL
-        url = data.get("seo_link", {}).get("canonical", dog_url)
+        #url = data.get("seo_link", {}).get("canonical", dog_api_url)
 
         # Collect all images (avoid duplicates)
         image_urls = []
@@ -197,6 +195,7 @@ class SPA_spider:
             "source" : "SPA",
             "url": url,
             "name": self.clean_dog_name(infos["title"], self.french_dictionary),
+            "adopted" : False,
             "species": infos["species"]["name"],
             "sex": sex,
             "age_text" : age_text,
@@ -221,12 +220,13 @@ class SPA_spider:
         # Inserts the new record into the database
         self.cur.execute("""
             INSERT OR IGNORE INTO dogs
-            (source, name, url, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (source, name, url, adopted, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 "SPA",
                 item.get("name"),
                 item.get("url"),
+                item.get("adopted"),
                 item.get("species"),
                 item.get("sex"),
                 item.get("age_text"),

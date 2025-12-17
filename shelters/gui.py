@@ -22,10 +22,14 @@ TEXT_COLOR = "#333333"
 ROW_EVEN = "#ffffff"
 ROW_ODD = "#f9f9f9"
 
+# Status Colors (For Detail Page)
+COLOR_WAITING = "#5CB85C" # Green
+COLOR_ADOPTED = "#0275d8" # Blue
+
 # Chart Colors
-COLOR_LOW = "#D9534F"   # Red
-COLOR_MED = "#F0AD4E"   # Orange
-COLOR_HIGH = "#5CB85C"  # Green
+COLOR_LOW = "#D9534F"   
+COLOR_MED = "#F0AD4E"   
+COLOR_HIGH = "#5CB85C"  
 
 # --- Database Manager ---
 class DBManager:
@@ -34,10 +38,8 @@ class DBManager:
         self.conn.row_factory = sqlite3.Row 
         self.cur = self.conn.cursor()
 
-    def search_dogs(self, name=None, breed_query=None, categories=None, sexes=None, sources=None, compat=None):
-        # Added compat dict: {'kids': bool, 'dogs': bool, 'cats': bool}
-        
-        sql = "SELECT id, name, sex, breed, age_text, source, matched_breed, category FROM dogs WHERE 1=1"
+    def search_dogs(self, name=None, breed_query=None, categories=None, sexes=None, sources=None, compat=None, adoption_status=None):
+        sql = "SELECT id, name, sex, breed, age_text, source, matched_breed, category, adopted FROM dogs WHERE 1=1"
         params = []
 
         if name:
@@ -61,16 +63,15 @@ class DBManager:
             sql += f" AND source IN ({placeholders})"
             params.extend(sources)
 
-        # --- Compatibility Logic ---
-        # If checkbox is ticked, we enforce accepts_X = 1 (True)
-        # If unticked, we ignore it (allow both True and False)
         if compat:
-            if compat['kids']:
-                sql += " AND accepts_children = 1"
-            if compat['dogs']:
-                sql += " AND accepts_dogs = 1"
-            if compat['cats']:
-                sql += " AND accepts_cats = 1"
+            if compat['kids']: sql += " AND accepts_children = 1"
+            if compat['dogs']: sql += " AND accepts_dogs = 1"
+            if compat['cats']: sql += " AND accepts_cats = 1"
+
+        if adoption_status is not None and len(adoption_status) > 0:
+            placeholders = ','.join(['?'] * len(adoption_status))
+            sql += f" AND adopted IN ({placeholders})"
+            params.extend(adoption_status)
 
         self.cur.execute(sql, params)
         rows = self.cur.fetchall()
@@ -186,6 +187,13 @@ class DogApp:
         self.entry_breed = tk.Entry(fr_kw, bg="white")
         self.entry_breed.pack(fill="x", pady=(0, 5))
 
+        # Adoption Status
+        fr_status = create_filter_group("Adoption Status")
+        self.var_status_waiting = tk.BooleanVar(value=True) 
+        self.var_status_adopted = tk.BooleanVar(value=False) 
+        tk.Checkbutton(fr_status, text="Waiting for Adoption", variable=self.var_status_waiting, bg=BG_PANEL).pack(anchor="w")
+        tk.Checkbutton(fr_status, text="Adopted", variable=self.var_status_adopted, bg=BG_PANEL).pack(anchor="w")
+
         # Characteristics
         fr_char = create_filter_group("Characteristics")
         tk.Label(fr_char, text="Sex:", bg=BG_PANEL).pack(anchor="w")
@@ -206,12 +214,11 @@ class DogApp:
         tk.Checkbutton(f_cat, text="Adult", variable=self.var_adult, bg=BG_PANEL).pack(anchor="w")
         tk.Checkbutton(f_cat, text="Senior", variable=self.var_senior, bg=BG_PANEL).pack(anchor="w")
 
-        # Compatibility (NEW)
+        # Compatibility
         fr_comp = create_filter_group("Compatibility")
         self.var_ok_kids = tk.BooleanVar()
         self.var_ok_cats = tk.BooleanVar()
         self.var_ok_dogs = tk.BooleanVar()
-        
         tk.Checkbutton(fr_comp, text="Children", variable=self.var_ok_kids, bg=BG_PANEL).pack(anchor="w")
         tk.Checkbutton(fr_comp, text="Cats", variable=self.var_ok_cats, bg=BG_PANEL).pack(anchor="w")
         tk.Checkbutton(fr_comp, text="Dogs", variable=self.var_ok_dogs, bg=BG_PANEL).pack(anchor="w")
@@ -233,7 +240,7 @@ class DogApp:
         self.tree_scroll = ttk.Scrollbar(list_frame)
         self.tree_scroll.pack(side="right", fill="y")
         
-        columns = ("ID", "Name", "Sex", "Breed", "Age", "Source")
+        columns = ("ID", "Name", "Sex", "Breed", "Age", "Source", "Status")
         self.tree = ttk.Treeview(list_frame, columns=columns, show='headings', yscrollcommand=self.tree_scroll.set)
         
         self.tree.heading("ID", text="ID")
@@ -242,14 +249,17 @@ class DogApp:
         self.tree.heading("Breed", text="Breed")
         self.tree.heading("Age", text="Age")
         self.tree.heading("Source", text="Source")
+        self.tree.heading("Status", text="Status")
 
         self.tree.column("ID", width=0, stretch=False)
-        self.tree.column("Name", width=250)
+        self.tree.column("Name", width=200)
         self.tree.column("Sex", width=80)
         self.tree.column("Breed", width=200)
         self.tree.column("Age", width=100)
         self.tree.column("Source", width=150)
+        self.tree.column("Status", width=150)
         
+        # NOTE: Removed row text coloring to keep it standard black/striped
         self.tree.tag_configure('odd', background=ROW_ODD)
         self.tree.tag_configure('even', background=ROW_EVEN)
 
@@ -269,14 +279,16 @@ class DogApp:
         content.columnconfigure(1, weight=1)
         content.rowconfigure(0, weight=1)
         
-        left_col = tk.Frame(content, bg=BG_MAIN)
-        left_col.grid(row=0, column=0, padx=(0, 40), sticky="n")
+        # --- FIX: Save Left Column as self.left_col ---
+        self.left_col = tk.Frame(content, bg=BG_MAIN)
+        self.left_col.grid(row=0, column=0, padx=(0, 40), sticky="n")
 
-        self.lbl_big_image = tk.Label(left_col, text="[No Image]", bg="#E0E0E0", width=400, height=400)
+        self.lbl_big_image = tk.Label(self.left_col, text="[No Image]", bg="#E0E0E0", width=400, height=400)
         self.lbl_big_image.pack()
-        self.btn_gallery = tk.Button(left_col, text="View All Photos", bg="#6c757d", fg="white", font=("Arial", 11), relief="flat", command=self.open_gallery)
+        self.btn_gallery = tk.Button(self.left_col, text="View All Photos", bg="#6c757d", fg="white", font=("Arial", 11), relief="flat", command=self.open_gallery)
         self.btn_gallery.pack(fill="x", pady=15)
 
+        # --- FIX: Save Right Column as self.stats_container ---
         self.stats_container = tk.Frame(content, bg=BG_MAIN)
         self.stats_container.grid(row=0, column=1, sticky="nsew")
         self.stats_container.columnconfigure(0, weight=1)
@@ -286,35 +298,39 @@ class DogApp:
             f.pack(fill="x", pady=(0, 20))
             return f
 
-        # 1. Basic Info
+        # Basic Info
         self.fr_basic = create_card("Basic Information")
-        # Grid layout for basic info
         self.lbl_species = self.create_info_row(self.fr_basic, 0, "Species:")
         self.lbl_breed = self.create_info_row(self.fr_basic, 1, "Breed:")
-        
-        # Placeholder for dynamic button (Grid Row 2, spanning 2 columns)
         self.btn_breed_link = tk.Button(self.fr_basic, text="View Breed Details >", bg=ACCENT_COLOR, fg="white", font=("Arial", 9, "bold"), relief="flat")
         
         self.lbl_sex = self.create_info_row(self.fr_basic, 3, "Sex:")
         self.lbl_age = self.create_info_row(self.fr_basic, 4, "Age:")
         self.lbl_color = self.create_info_row(self.fr_basic, 5, "Color:")
         self.lbl_source = self.create_info_row(self.fr_basic, 6, "Source:")
+        self.lbl_adopted = self.create_info_row(self.fr_basic, 7, "Adoption Status:")
 
-        # 2. Compatibility
+        # Compatibility
         self.fr_compat = create_card("Compatibility")
         self.lbl_dogs = self.create_info_row(self.fr_compat, 0, "With Dogs:")
         self.lbl_cats = self.create_info_row(self.fr_compat, 1, "With Cats:")
         self.lbl_kids = self.create_info_row(self.fr_compat, 2, "With Kids:")
 
-        # 3. Location
+        # Location
         self.fr_loc = create_card("Location & Contact")
         self.lbl_est = self.create_info_row(self.fr_loc, 0, "Establishment:")
         
-        tk.Label(self.fr_loc, text="More Info:", font=("Arial", 11, "bold"), bg=BG_MAIN).grid(row=1, column=0, sticky="w", pady=4)
+        # Save Label widgets to self to hide them later
+        self.lbl_more_info_txt = tk.Label(self.fr_loc, text="More Info:", font=("Arial", 11, "bold"), bg=BG_MAIN)
+        self.lbl_more_info_txt.grid(row=1, column=0, sticky="w", pady=4)
+        
         self.lbl_url = tk.Label(self.fr_loc, text="Click here", font=("Arial", 11, "underline"), fg="#0056b3", cursor="hand2", bg=BG_MAIN, wraplength=500, justify="left")
         self.lbl_url.grid(row=1, column=1, sticky="w", pady=4)
 
-        # Removed Action Card (Button moved to Basic Info)
+        self.fr_action = tk.Frame(self.stats_container, bg=BG_MAIN)
+        self.fr_action.pack(fill="x", pady=10)
+        self.lbl_match_info = tk.Label(self.fr_action, text="", font=("Arial", 11, "italic"), bg=BG_MAIN, fg="#666")
+        self.lbl_match_info.pack(anchor="w")
 
     def create_info_row(self, parent, row_idx, label_text):
         tk.Label(parent, text=label_text, font=("Arial", 11, "bold"), bg=BG_MAIN).grid(row=row_idx, column=0, sticky="w", pady=4, padx=(0, 15))
@@ -418,6 +434,7 @@ class DogApp:
         self.var_male.set(False); self.var_female.set(False)
         self.var_ok_kids.set(False); self.var_ok_cats.set(False); self.var_ok_dogs.set(False)
         self.var_spa.set(True); self.var_sc.set(True)
+        self.var_status_waiting.set(True); self.var_status_adopted.set(False)
         self.run_search()
 
     def run_search(self):
@@ -433,10 +450,17 @@ class DogApp:
             'dogs': self.var_ok_dogs.get()
         }
 
-        results = self.db.search_dogs(self.entry_name.get(), self.entry_breed.get(), cats, sexes, sources, compat)
+        status_filter = []
+        if self.var_status_waiting.get(): status_filter.append(0)
+        if self.var_status_adopted.get(): status_filter.append(1)
+
+        results = self.db.search_dogs(self.entry_name.get(), self.entry_breed.get(), cats, sexes, sources, compat, status_filter)
         for i, row in enumerate(results):
+            # No color tag for the row, just text data
+            is_adopted = row['adopted'] == 1
+            status_text = "Adopted" if is_adopted else "Waiting for adoption"
             tag = 'even' if i % 2 == 0 else 'odd'
-            self.tree.insert("", "end", values=(row['id'], row['name'], row['sex'], row['breed'], row['age_text'], row['source']), tags=(tag,))
+            self.tree.insert("", "end", values=(row['id'], row['name'], row['sex'], row['breed'], row['age_text'], row['source'], status_text), tags=(tag,))
 
     def open_dog_details(self, event):
         sel = self.tree.selection()
@@ -457,6 +481,29 @@ class DogApp:
         self.lbl_color.config(text=dog['colors'])
         self.lbl_source.config(text=dog['source'])
 
+        # --- FIX: Adopted Logic with Layout Change ---
+        is_adopted = dog['adopted'] == 1
+        status_text = "Adopted" if is_adopted else "Waiting for adoption"
+        status_color = COLOR_ADOPTED if is_adopted else COLOR_WAITING
+        self.lbl_adopted.config(text=status_text, fg=status_color, font=("Arial", 11, "bold"))
+
+        if is_adopted:
+            # Hide Image/Gallery column
+            self.left_col.grid_remove()
+            # Move Stats to Center/Left (Column 0) with padding to look nice
+            self.stats_container.grid(row=0, column=0, sticky="nsew", padx=10)
+            # Hide URL info
+            self.lbl_url.grid_remove()
+            self.lbl_more_info_txt.grid_remove()
+        else:
+            # Restore Normal Layout
+            self.left_col.grid()
+            self.stats_container.grid(row=0, column=1, sticky="nsew", padx=0)
+            # Show URL info
+            self.lbl_url.grid()
+            self.lbl_more_info_txt.grid()
+
+        # Compatibility
         def set_compat(l, v):
             l.config(text="Yes" if v else "No", fg="#4A7c59" if v else "#d9534f", font=("Arial", 11, "bold"))
         set_compat(self.lbl_dogs, dog['accepts_dogs'])
@@ -464,7 +511,9 @@ class DogApp:
         set_compat(self.lbl_kids, dog['accepts_children'])
 
         self.lbl_est.config(text=dog['establishment'])
-        if dog['url']:
+        
+        # Only setup URL if not adopted (though visual widgets are hidden above)
+        if not is_adopted and dog['url']:
             self.lbl_url.config(text=dog['url'])
             self.lbl_url.bind("<Button-1>", lambda e: self.open_url(dog['url']))
         else:
@@ -472,20 +521,21 @@ class DogApp:
             self.lbl_url.unbind("<Button-1>")
 
         if dog['matched_breed']:
-            # FIX: Show button dynamically in grid row 2
             self.btn_breed_link.config(command=lambda: self.load_breed_data(dog['matched_breed']))
-            self.btn_breed_link.grid(row=2, column=0, columnspan=2, sticky="w", pady=(2, 10))
+            self.btn_breed_link.grid(row=2, column=0, columnspan=2, sticky="w", pady=(2, 10), padx=(0, 15))
         else:
             self.btn_breed_link.grid_forget()
 
-        try:
-            urls = self.db.get_dog_images(dog_id)
-            if urls:
-                self.load_image_to_label(urls[0], self.lbl_big_image)
-            else:
-                self.lbl_big_image.config(text="No Image Available")
-        except:
-            self.lbl_big_image.config(text="Image Error")
+        # Load Image only if not adopted (optimization)
+        if not is_adopted:
+            try:
+                urls = self.db.get_dog_images(dog_id)
+                if urls:
+                    self.load_image_to_label(urls[0], self.lbl_big_image)
+                else:
+                    self.lbl_big_image.config(text="No Image Available")
+            except:
+                self.lbl_big_image.config(text="Image Error")
 
     def open_gallery(self):
         if not self.current_dog_id: return

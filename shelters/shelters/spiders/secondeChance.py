@@ -110,6 +110,7 @@ class SecondeChanceDogsSpider(scrapy.Spider):
             "source": "Seconde Chance",
             "url": response.url,
             "name":name,
+            "adopted":False,
             "species": species,
             "sex": sex,
             "age text": age_text,

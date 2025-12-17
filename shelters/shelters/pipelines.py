@@ -10,7 +10,10 @@ import sqlite3
 from datetime import datetime
 import os
 
+# This is called automatically by Scrapy when yielding a new record
+# It stores every new record in the seconde_chance.jsonl file.
 class JsonWriterPipeline:
+
     def open_spider(self, spider):
         os.makedirs("data", exist_ok=True)
         self.filename = "data/seconde_chance.jsonl"
@@ -32,6 +35,8 @@ class JsonWriterPipeline:
         spider.logger.info(f"Finished writing to {self.filename}")
 
 
+# THis is called automatically by the spider, and stores every new record
+# on the fly in the database.
 class SQLitePipeline:
     def open_spider(self, spider):
         os.makedirs("data", exist_ok=True) 
@@ -43,6 +48,7 @@ class SQLitePipeline:
             source TEXT,
             name TEXT,
             url TEXT UNIQUE,
+            adopted BOOL,
             species TEXT,
             sex TEXT,
             age_text TEXT,
@@ -72,12 +78,13 @@ class SQLitePipeline:
     def process_item(self, item, spider):
         self.cur.execute("""
             INSERT OR IGNORE INTO dogs
-            (source, name, url, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (source, name, url, adopted, species, sex, age_text, age, category, breed, matched_breed, colors, accepts_dogs, accepts_cats, accepts_children, establishment, establishment_url)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 "Seconde chance",
                 item.get("name"),
                 item.get("url"),
+                item.get("adopted"),
                 item.get("species"),
                 item.get("sex"),
                 item.get("age_text"),

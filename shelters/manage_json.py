@@ -4,9 +4,12 @@ import html
 import requests
 import time
 import argparse
-
+import os
 
 def is_url_live(url):
+    '''
+    Tests if the url still exists to see if a dog has been adopted.
+    '''
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
         
@@ -87,6 +90,7 @@ def reorder_dict(dog_data):
         "source",
         "url",
         "name",
+        "adopted",
         "species",
         "sex",
         "age_text",
@@ -123,7 +127,7 @@ def age_to_category(age_float):
 def clean_json(args, input_file, output_file, french_dictionary):
     with open(input_file, 'r', encoding='utf-8') as infile, \
         open(output_file, 'w', encoding='utf-8') as outfile:
-        
+        count = 0
         for line in infile:
             if line.strip(): 
                 data = json.loads(line)
@@ -132,28 +136,36 @@ def clean_json(args, input_file, output_file, french_dictionary):
                 name = clean_dog_name(name, french_dictionary)
                 data["name"] = name
 
-
+                data["adopted"] = False
                 data = reorder_dict(data)
 
                 # Checks if the dog is still listed for adoption
                 # Can be very long, because we still need the delay.
                 if args.update_jsonl:
+                    count += 1
+                    print(f"Processing line {count} of file {input_file}.")
                     url = data["url"]
 
-                    if is_url_live(url):
-                        outfile.write(json.dumps(data, ensure_ascii=False) + '\n')
-                    
+                    if not data["adopted"] and not is_url_live(url):
+                        data["adopted"] = True
+
+                    outfile.write(json.dumps(data, ensure_ascii=False) + '\n')
                     time.sleep(1.0)
 
                 else:
                     outfile.write(json.dumps(data, ensure_ascii=False) + '\n')
 
+    # The cleaned file replaces the old one.
+    if args.replace:
+        os.remove(input_file)
+        os.rename(output_file, input_file)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Maintain the json data.")
 
-    parser.add_argument("-u", "--update_jsonl", action = "store_true", help = "Should the jsonl files be updated")
+    parser.add_argument("-u", "--update_jsonl", action = "store_true", help = "Should the adoption status be updated")
+    parser.add_argument("-r", "--replace", action = "store_true", help = "Should the jsonl files be updated in place")
 
     args = parser.parse_args()
 
