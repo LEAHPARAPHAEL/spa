@@ -15,7 +15,6 @@ connect.close()
 
 # Number of dogs of each breeds in the shelters
 top20_breeds = dogs_df['matched_breed'].value_counts()[:20]
-print(top20_breeds)
 
 # Write the percentage only on parts with more than 3%
 def autopct_filter(pct):
@@ -76,6 +75,21 @@ plt.title("Number of dogs per size in shelters")
 plt.grid(True, zorder=0)
 plt.tight_layout()
 plt.savefig("plots/size_hist.png")
+plt.show()
+
+# Number of dogs of each breeds in the shelters
+top20_breeds_adopted = dogs_df[dogs_df['adopted']==True]['matched_breed'].value_counts()[:20]
+
+# Write the percentage only on parts with more than 3%
+def autopct_filter(pct):
+    return f"{pct:.1f}%" if pct > 3 else ""
+
+# Plot it as a diagram and save it in directory plots
+plt.figure(figsize = (8,6))
+plt.pie(top20_breeds_adopted.values, labels=top20_breeds_adopted.index, autopct=autopct_filter)
+plt.title('Top 20 breeds adopted in France in 2026.')
+plt.tight_layout()
+plt.savefig('plots/top20_breeds_adopted.png')
 plt.show()
 
 
