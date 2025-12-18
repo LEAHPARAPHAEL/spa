@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from io import BytesIO
 import difflib
 import webbrowser
+import time
 
 # --- Matplotlib Imports ---
 import matplotlib
@@ -565,6 +566,7 @@ class DogApp:
                 photo = ImageTk.PhotoImage(img)
                 self.gallery_images.append(photo) 
                 lbl.config(image=photo, text="", width=400, height=300)
+                time.sleep(1)
             except:
                 lbl.config(text="Error", width=50, height=20)
         
@@ -626,7 +628,7 @@ class DogApp:
 
         fig_height = len(labels) * 0.35 
         fig = Figure(figsize=(6, fig_height), dpi=100, facecolor=BG_MAIN)
-        fig.subplots_adjust(left=0.10, right=0.98, top=0.98, bottom=0.05)
+        fig.subplots_adjust(left=0.15, right=0.98, top=0.98, bottom=0.05)
 
         ax = fig.add_subplot(111)
         ax.set_facecolor(BG_MAIN)

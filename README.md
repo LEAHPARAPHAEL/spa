@@ -110,9 +110,8 @@ However, the two websites cannot be scraped in the same way.
 like scrapy to collect the data. This part of the work is implemented in shelters/spiders/seconde_chance.py.
 Once the HTML file is downloaded, we use XPATH selectors to retrieve information about the dog. 
 
-2. SPA has a JavaScript backend, which prevents us from using standard crawlers like scrapy.
-However, by inspecting their page, we found that they use a public JSON endpoint to dynamically
-load the data. There exists one JSON file per page, each one containing URLs for a dozen of dogs.
+2. SPA has a JavaScript backend, which prevents us from using standard crawlers like scrapy. Moreover, their robots.txt file essentially prevents almost all crawling on their website. So, to be able to do so while respecting their policy, we contacted their technical support, who very nicely told us that we could use their JSON endpoint for such a small-scale project, with no commercial purpose.
+In this endpoint, there exists one JSON file per page, each one containing URLs for a dozen of dogs.
 These URLs point to one JSON file per dog, containing all its information, which is then easily parsed.
 
 The dogs records are stored in jsonl files, and then in a sqlite3 database.
@@ -243,3 +242,5 @@ perfect. We identify below two main improvements we could consider, further work
 dog. 
 
 2. Another important thing to do would be to automate the process, for example by scheduling regular updates.
+
+
