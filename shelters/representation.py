@@ -1,6 +1,9 @@
 import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+
+os.makedirs("plots", exist_ok=True)
 
 connect = sqlite3.connect("data/shelters.db")
 
@@ -15,9 +18,17 @@ connect.close()
 
 # First how much of our data in each table is null to assess the quality of the tables
 
-print(dogs_df.isnull().mean() * 100)
-print(images_df.isnull().mean() * 100)
-print(breeds_df.isnull().mean() * 100)
+dogs_missing_pct = dogs_df.isnull().mean() * 100
+images_missing_pct = images_df.isnull().mean() * 100
+breeds_missing_pct = breeds_df.isnull().mean() * 100
+
+print(dogs_missing_pct)
+print(images_missing_pct)
+print(breeds_missing_pct)
+
+dogs_missing_pct.to_csv('plots/dogs_missing.csv', header=['percent_missing'])
+images_missing_pct.to_csv('plots/images_missing.csv', header=['percent_missing'])
+breeds_missing_pct.to_csv('plots/breeds_missing.csv', header=['percent_missing'])
 
 # Then some plots to make a html table that summarizes what we learned with this scraping
 
