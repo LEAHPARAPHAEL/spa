@@ -84,9 +84,9 @@ the rest can be seen using the button "see photos" below the image. If the breed
 from the dataset (see Other tables for more details), details about the breed can be accessed using the button below the breed field.
 
 
-## Querying the database
+## Querying and evaluating the database
 
-Navigating this database can be done using the Graphical User Interface, as explained above. But this can
+Navigating this database can be done using the Graphical User Interface, as explained above. But this can 
 also be done using standard database querying mechanisms compatible with sqlite3.
 
 Some examples of potential use cases for this work are illustrated in the file representation.py, which can be
@@ -94,11 +94,21 @@ called as:
 
     python representation.py
 
-This queries some statistics about dogs from the database using pandas, and saves the figures in the plots/ 
-directory.
+This queries some statistics about dogs from the database using pandas, and saves the figures in the plots/ directory. 
+This also allows us to study the quality of the produced data, by displaying the number of missing values for each 
+table of the database (dogs, images, and breeds). We can see that almost all fields contain less than 1% of missing values,
+except the matched_breed in the table dogs, which contains around 75% of missing values. Indeed, it was difficult to map the
+~400 different breeds to existing ones, given that many of them are ambiguous or not enough detailed, like "Chien croisé", or
+"berger". 
+So, the workaround we used as an example in the GUI is to store both the non normalized breed and the tentative matched breed,
+and filter on both using fuzzy matching. This way, this gives more margin or error to the user to search for a specific breed.
+This is more detailed in the implementation part.
 
 Using these plots, we made a simple html page (plots/shelter_dogs.html) analysing the typical profile of dogs listed for 
 adoptions, to try to investigate why their owners abandon them.
+
+
+
 
 
 ## General implementation scheme
@@ -192,7 +202,15 @@ It also possesses an attribute breed_name, which is unique.
 For every different breed name in the SPA and Seconde Chance database, we tried to match these names to an existing
 breed name from this dataset, using a combination of fuzzy matching, translation, generative AI, and manual review.
 This mapping is available in the file data/breeds_mapping.json, and is used when building a dog's record to 
-obtain the field "matched_breed", which is either a breed name from the dataset, or the null pointer.
+obtain the field "matched_breed", which is either a breed name from the dataset, or the null pointer. As explained before,
+many of these breeds are actually non informative, like "chien croisé", which means that the dog is a mixed breed. 
+Another difficulty is the translation of these breeds. Because our dataset and target database are in English, we need
+to translate these breed names before trying to match them in the dataset. This explains why the field matched_breed in
+the table dogs has so many missing values.
+
+As this was a late extension of our work, we did not have time to propose a more robust workaround to this potential issue.
+However, future work could involve a more careful normalization and translation, possibly by hand, and potentially
+using several breeds datasets to cover a wider range of dog breeds.
 
 
 ## Update the jsonl files
@@ -243,4 +261,5 @@ dog.
 
 2. Another important thing to do would be to automate the process, for example by scheduling regular updates.
 
+3. Improve the normalization and matching process for dog breeds.
 
